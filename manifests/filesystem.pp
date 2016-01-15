@@ -61,4 +61,16 @@ class cisbench::filesystem (
     notify { "No bindmount /var/tmp /tmp detected. Failed tmpbindmount_report check.": }
   }
 
+  if $tmpbindmount_manage == true {
+    mount { '/var/tmp':
+      ensure  => 'mounted',
+      device  => '/tmp',
+      dump    => '0',
+      fstype  => 'none',
+      options => 'bind',
+      pass    => '0',
+      target  => '/etc/fstab',
+    }
+
+  }
 }
