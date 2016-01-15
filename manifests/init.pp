@@ -10,6 +10,7 @@
 #
 # Sample Usage:
 #
-class cisbench {
+class cisbench (
+) inherits cisbench::params {
 
 }
