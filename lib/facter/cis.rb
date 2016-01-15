@@ -35,7 +35,7 @@ Facter.add(:cis) do
     else
       cishash['is_tmpnoexec'] =  false
     end
-    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*/tmp[[:space:]]*on[[:space:]]*/var/tmp\' /etc/fstab | grep noexec')
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*/tmp[[:space:]]*/var/tmp\' /etc/fstab | grep noexec')
     if returnval != ''
       cishash['is_tmpbindmount'] =  true
     else
