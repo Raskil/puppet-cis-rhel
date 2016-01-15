@@ -62,14 +62,19 @@ class cisbench::filesystem (
   }
 
   if $tmpbindmount_manage == true {
-    mount { '/var/tmp':
-      ensure  => 'mounted',
-      device  => '/tmp',
-      dump    => '0',
-      fstype  => 'none',
-      options => 'bind',
-      pass    => '0',
-      target  => '/etc/fstab',
+    if $::cis['is_tmpseperatemount'] == true {
+      mount { '/var/tmp':
+        ensure  => 'mounted',
+        device  => '/tmp',
+        dump    => '0',
+        fstype  => 'none',
+        options => 'bind',
+        pass    => '0',
+        target  => '/etc/fstab',
+      }
+    } else {
+      fail("Not able to do /var/tmp bindmount to /tmp, because /tmp is not a seperate mount. Eiter Make /tmp seperate mount or disable the manage options for /var/tmp bindmount device of the cis module."
+      )
     }
 
   }
