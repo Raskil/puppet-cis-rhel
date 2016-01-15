@@ -58,7 +58,7 @@ class cisbench::filesystem (
   }
 
   if $::cis['is_tmpbindmount'] == false and $tmpbindmount_report == true {
-    notify { "/tmp has no noexec option. Failed tmpnoexec_report check.": }
+    notify { "No bindmount /var/tmp /tmp detected. Failed tmpbindmount_report check.": }
   }
 
 }
