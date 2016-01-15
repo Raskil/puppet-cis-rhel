@@ -14,7 +14,7 @@ class cisbench::params (
   $cisleveldefaults = 1,) {
   $tmpseperatemount_report = true
 
-  if $cisleveldefaults = 2 {
+  if $cisleveldefaults == 2 {
     $tmp = true
   }
 
