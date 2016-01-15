@@ -11,5 +11,5 @@ Facter.add(:cis_is_tmpseperatemount) do
     else
       false
     end
-    end
+  end
 end
