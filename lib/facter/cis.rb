@@ -11,6 +11,25 @@ Facter.add(:cis) do
     else
       cishash['is_tmpseperatemount'] =  false
     end
+    returnval = Facter::Core::Execution.exec('grep ^/tmp /etc/fstab | grep nodev')
+    if returnval != ''
+      cishash['is_tmpnodev'] =  true
+    else
+      cishash['is_tmpnodev'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('grep ^/tmp /etc/fstab | grep nosuid')
+    if returnval != ''
+      cishash['is_tmpnosuid'] =  true
+    else
+      cishash['is_tmpnosuid'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('grep ^/tmp /etc/fstab | grep noexec')
+    if returnval != ''
+      cishash['is_tmpnoexec'] =  true
+    else
+      cishash['is_tmpnoexec'] =  false
+    end
     cishash
+    
   end
 end
