@@ -23,7 +23,7 @@ class cisbench::filesystem (
   }
 
   if $::cis['is_tmpnodev'] == false and $tmpnodev_report == true {
-    notify { "/tmp has no tmpnodev option.  check.": }
+    notify { "/tmp has no tmpnodev option. Failed tmpnodev_report check.": }
   }
 
   if $tmpnodev_manage == true or $tmpnosuid_manage == true or $tmpnoexec_manage == true {
