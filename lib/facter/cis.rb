@@ -11,6 +11,18 @@ Facter.add(:cis) do
     else
       cishash['is_tmpseperatemount'] =  false
     end
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/var/log[[:space:]]\' /etc/fstab')
+    if returnval != ''
+      cishash['is_varlogseperatemount'] =  true
+    else
+      cishash['is_varlogseperatemount'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/var/log/audit[[:space:]]\' /etc/fstab')
+    if returnval != ''
+      cishash['is_varlogauditseperatemount'] =  true
+    else
+      cishash['is_varlogauditseperatemount'] =  false
+    end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/var[[:space:]]\' /etc/fstab')
     if returnval != ''
       cishash['is_varseperatemount'] =  true
