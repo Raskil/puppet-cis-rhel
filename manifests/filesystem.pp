@@ -27,15 +27,19 @@ class cisbench::filesystem (
   }
 
   if $tmpnodev_manage == true or $tmpnosuid_manage == true or $tmpnoexec_manage == true {
-    mount { '/tmp':
-      ensure  => 'mounted',
-      dump    => '1',
-      options => inline_template('defaults<% if @tmpnodev_manage -%>,nodev<% end -%><% if @tmpnosuid_manage -%>,nosuid<% end -%><% if @tmpnoexec_manage -%>,noexec<% end -%>'
-      ),
-      pass    => '2',
-      target  => '/etc/fstab',
+    if $::cis['is_tmpseperatemount'] == true {
+      mount { '/tmp':
+        ensure  => 'mounted',
+        dump    => '1',
+        options => inline_template('defaults<% if @tmpnodev_manage -%>,nodev<% end -%><% if @tmpnosuid_manage -%>,nosuid<% end -%><% if @tmpnoexec_manage -%>,noexec<% end -%>'
+        ),
+        pass    => '2',
+        target  => '/etc/fstab',
+      }
+    } else {
+      fail("Not able to manage /tmp mount options, because /tmp is not a seperate mount. Eiter Make /tmp seperate mount or disable the manage options for /tmp device of the cis module."
+      )
     }
-
   }
 
 }
