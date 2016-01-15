@@ -12,5 +12,7 @@
 #
 class cisbench (
 ) inherits cisbench::params {
+  contain cisbench::filesystem
 
+  # Class['cisbench::filesystem']
 }
