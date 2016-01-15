@@ -5,12 +5,12 @@ Facter.add(:cis) do
   confine :osfamily => "RedHat"
   cishash = {}
   setcode do
-    'grep "[[:space:]]/blah[[:space:]]" /etc/fstab' 
+    Facter::Core::Execution.exec('grep "[[:space:]]/blah[[:space:]]" /etc/fstab')
 #    if tmp != ''
 #      cishash['is_tmpseperatemount'] =  true
 #    else
 #      cishash['is_tmpseperatemount'] =  false
 #    end
 #    cishash
-end
+  end
 end
