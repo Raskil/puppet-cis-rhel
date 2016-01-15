@@ -1,0 +1,25 @@
+{
+  "author": "Raskil",
+        "dependencies": [
+        { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.0.0 < 5.0.0" },
+        { "name": "puppetlabs/firewall", "version_requirement": ">= 0.0.4" }
+      ],
+  "license": "none",
+  "name": "Raskil-cisbench",
+  "operatingsystem_support": [
+        {
+        "operatingsystem":"RedHat",
+        "operatingsystemrelease":[ "6.0"]
+        },
+        {
+        "operatingsystem": "OracleLinux",
+        "operatingsystemrelease": [ "6"]
+        }
+       ],
+  "project_page": "https://github.com/Raskil/puppet-cisbench",
+  "requirements": [],
+  "source": "https://github.com/Raskil/puppet-cisbench",
+  "summary": "Puppetmodule for managing CIS Benchmark Settings",
+  "tags": ["CIS", "Security", "Hardening" ],
+  "version": "0.1.0"
+}
