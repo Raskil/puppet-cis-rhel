@@ -18,7 +18,9 @@ class cisbench::filesystem (
   $tmpnosuid_report        = $cisbench::params::tmpnosuid_report,
   $tmpnosuid_manage        = $cisbench::params::tmpnosuid_manage,
   $tmpnoexec_report        = $cisbench::params::tmpnoexec_report,
-  $tmpnoexec_manage        = $cisbench::params::tmpnoexec_manage,) inherits cisbench::params {
+  $tmpnoexec_manage        = $cisbench::params::tmpnoexec_manage,
+  $tmpbindmount_report     = $cisbench::params::tmpbindmount_report,
+  $tmpbindmount_manage     = $cisbench::params::tmpbindmount_manage,) inherits cisbench::params {
   if $::cis['is_tmpseperatemount'] == false and $tmpseperatemount_report == true {
     notify { "/tmp is not on a separate mount. Failed tmpseperatemount_report check.": }
   }
@@ -53,6 +55,10 @@ class cisbench::filesystem (
       fail("Not able to manage /tmp mount options, because /tmp is not a seperate mount. Eiter Make /tmp seperate mount or disable the manage options for /tmp device of the cis module."
       )
     }
+  }
+
+  if $::cis['is_tmpbindmount'] == false and $tmpbindmount_report == true {
+    notify { "/tmp has no noexec option. Failed tmpnoexec_report check.": }
   }
 
 }
