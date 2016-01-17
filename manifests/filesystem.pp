@@ -133,7 +133,7 @@ class cisbench::filesystem (
   }
 
   if $devshmnodev_manage == true or $devshmnosuid_manage == true or $devshmnoexec_manage == true {
-    mount { '/devshm':
+    mount { '/dev/shm':
       ensure  => 'mounted',
       dump    => '1',
       options => inline_template('defaults<% if @devshmnodev_manage -%>,nodev<% end -%><% if @devshmnosuid_manage -%>,nosuid<% end -%><% if @devshmnoexec_manage -%>,noexec<% end -%>'
