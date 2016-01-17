@@ -99,8 +99,6 @@ class cisbench::filesystem (
     notify { "/home has no nodev option. Failed homenodev_report check.": }
   }
 
-  notify { "test: ${homenodev_manage}": }
-
   if $homenodev_manage == true {
     if $::cis['is_homeseparatemount'] == true {
       mount { '/home':
