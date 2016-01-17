@@ -29,6 +29,12 @@ Facter.add(:cis) do
     else
       cishash['is_varseperatemount'] =  false
     end
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/home[[:space:]]\' /etc/fstab')
+    if returnval != ''
+      cishash['is_homeseperatemount'] =  true
+    else
+      cishash['is_homeseperatemount'] =  false
+    end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/tmp[[:space:]]\' /etc/fstab | grep nodev')
     if returnval != ''
       cishash['is_tmpnodev'] =  true

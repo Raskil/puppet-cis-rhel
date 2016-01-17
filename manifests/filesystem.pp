@@ -15,6 +15,7 @@ class cisbench::filesystem (
   $varseparatemount_report         = $cisbench::params::varseparatemount_report,
   $varlogseparatemount_report      = $cisbench::params::varlogseparatemount_report,
   $varlogauditseparatemount_report = $cisbench::params::varlogauditseparatemount_report,
+  $homeseparatemount_report        = $cisbench::params::varlogauditseparatemount_report,
   $tmpnodev_report                 = $cisbench::params::tmpnodev_report,
   $tmpnodev_manage                 = $cisbench::params::tmpnodev_manage,
   $tmpnosuid_report                = $cisbench::params::tmpnosuid_report,
@@ -37,6 +38,10 @@ class cisbench::filesystem (
 
   if $::cis['is_varlogauditseparatemount'] == false and $varlogauditseparatemount_report == true {
     notify { "/var/log/audit is not on a separate mount. Failed varlogauditseparatemount_report check.": }
+  }
+
+  if $::cis['is_homeseparatemount'] == false and $homeseparatemount_report == true {
+    notify { "/home is not on a separate mount. Failed homeseparatemount_report check.": }
   }
 
   if $::cis['is_tmpnodev'] == false and $tmpnodev_report == true {
