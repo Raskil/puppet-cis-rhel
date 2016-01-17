@@ -104,8 +104,7 @@ class cisbench::filesystem (
       mount { '/home':
         ensure  => 'mounted',
         dump    => '1',
-        options => inline_template('defaults<% if @homenodev_manage -%>,nodev<% end -%><% if @homenosuid_manage -%>,nosuid<% end -%><% if @homenoexec_manage -%>,noexec<% end -%>'
-        ),
+        options => 'defaults,nodev',
         pass    => '2',
         target  => '/etc/fstab',
       }
