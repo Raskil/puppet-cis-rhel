@@ -59,6 +59,12 @@ Facter.add(:cis) do
     else
       cishash['is_tmpbindmount'] =  false
     end
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/home[[:space:]]\' /etc/fstab | grep nodev')
+    if returnval != ''
+      cishash['is_homenodev'] =  true
+    else
+      cishash['is_homenodev'] =  false
+    end
     cishash
     
   end

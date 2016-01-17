@@ -23,7 +23,9 @@ class cisbench::filesystem (
   $tmpnoexec_report                = $cisbench::params::tmpnoexec_report,
   $tmpnoexec_manage                = $cisbench::params::tmpnoexec_manage,
   $tmpbindmount_report             = $cisbench::params::tmpbindmount_report,
-  $tmpbindmount_manage             = $cisbench::params::tmpbindmount_manage,) inherits cisbench::params {
+  $tmpbindmount_manage             = $cisbench::params::tmpbindmount_manage,
+  $homenodev_report                = $cisbench::params::homenodev_report,
+  $homenodev_manage                = $cisbench::params::homenodev_manage,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "/tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
@@ -89,6 +91,26 @@ class cisbench::filesystem (
       }
     } else {
       fail("Not able to do /var/tmp bind mount to /tmp, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /var/tmp bindmount device of the cis module."
+      )
+    }
+  }
+
+  if $::cis['is_homenodev'] == false and $homenodev_report == true {
+    notify { "/home has no nodev option. Failed homenodev_report check.": }
+  }
+
+  if $homenodev_manage == true {
+    if $::cis['is_homeseparatemount'] == true {
+      mount { '/home':
+        ensure  => 'mounted',
+        dump    => '1',
+        options => inline_template('defaults<% if @homenodev_manage -%>,nodev<% end -%><% if @homenosuid_manage -%>,nosuid<% end -%><% if @homenoexec_manage -%>,noexec<% end -%>'
+        ),
+        pass    => '2',
+        target  => '/etc/fstab',
+      }
+    } else {
+      fail("Not able to manage /home mount options, because /home is not a separate mount. Eiter Make /home separate mount or disable the manage options for /home device of the cis module."
       )
     }
   }
