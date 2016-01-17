@@ -25,7 +25,13 @@ class cisbench::filesystem (
   $tmpbindmount_report             = $cisbench::params::tmpbindmount_report,
   $tmpbindmount_manage             = $cisbench::params::tmpbindmount_manage,
   $homenodev_report                = $cisbench::params::homenodev_report,
-  $homenodev_manage                = $cisbench::params::homenodev_manage,) inherits cisbench::params {
+  $homenodev_manage                = $cisbench::params::homenodev_manage,
+  $devshmnodev_report              = $cisbench::params::devshmnodev_report,
+  $devshmnodev_manage              = $cisbench::params::devshmnodev_manage,
+  $devshmnosuid_report             = $cisbench::params::devshmnosuid_report,
+  $devshmnosuid_manage             = $cisbench::params::devshmnosuid_manage,
+  $devshmnoexec_report             = $cisbench::params::devshmnoexec_report,
+  $devshmnoexec_manage             = $cisbench::params::devshmnoexec_manage,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "/tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
@@ -112,5 +118,29 @@ class cisbench::filesystem (
       fail("Not able to manage /home mount options, because /home is not a separate mount. Eiter Make /home separate mount or disable the manage options for /home device of the cis module."
       )
     }
+  }
+
+  if $::cis['is_devshmnodev'] == false and $devshmnodev_report == true {
+    notify { "/dev/shm has no nodev option. Failed devshmnodev_report check.": }
+  }
+
+  if $::cis['is_devshmnosuid'] == false and $devshmnosuid_report == true {
+    notify { "/dev/shm has no nosuid option. Failed devshmnosuid_report check.": }
+  }
+
+  if $::cis['is_devshmnoexec'] == false and $devshmnoexec_report == true {
+    notify { "/dev/shm has no noexec option. Failed devshmnoexec_report check.": }
+  }
+
+  if $devshmnodev_manage == true or $devshmnosuid_manage == true or $devshmnoexec_manage == true {
+    mount { '/devshm':
+      ensure  => 'mounted',
+      dump    => '1',
+      options => inline_template('defaults<% if @devshmnodev_manage -%>,nodev<% end -%><% if @devshmnosuid_manage -%>,nosuid<% end -%><% if @devshmnoexec_manage -%>,noexec<% end -%>'
+      ),
+      pass    => '2',
+      target  => '/etc/fstab',
+    }
+
   }
 }

@@ -27,6 +27,12 @@ class cisbench::params (
   $tmpbindmount_manage = $managediffs
   $homenodev_report = true
   $homenodev_manage = $managediffs
+  $devshmnodev_report = true
+  $devshmnodev_manage = $managediffs
+  $devshmnosuid_report = true
+  $devshmnosuid_manage = $managediffs
+  $devshmnoexec_report = true
+  $devshmnoexec_manage = $managediffs
 
   if $cisleveldefaults == 2 {
     $tmp = true

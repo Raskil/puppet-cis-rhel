@@ -66,6 +66,23 @@ Facter.add(:cis) do
       cishash['is_homenodev'] =  false
     end
     cishash
-    
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/dev/shm[[:space:]]\' /etc/fstab | grep nodev')
+    if returnval != ''
+      cishash['is_devshmnodev'] =  true
+    else
+      cishash['is_devshmnodev'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/dev/shm[[:space:]]\' /etc/fstab | grep nosuid')
+    if returnval != ''
+      cishash['is_devshmnosuid'] =  true
+    else
+      cishash['is_devshmnosuid'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/dev/shm[[:space:]]\' /etc/fstab | grep noexec')
+    if returnval != ''
+      cishash['is_devshmnoexec'] =  true
+    else
+      cishash['is_devshmnoexec'] =  false
+    end
   end
 end
