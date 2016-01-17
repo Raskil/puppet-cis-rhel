@@ -11,22 +11,32 @@
 # Sample Usage:
 #
 class cisbench::filesystem (
-  $tmpseperatemount_report = $cisbench::params::tmpseperatemount_report,
-  $varseperatemount_report = $cisbench::params::varseperatemount_report,
-  $tmpnodev_report         = $cisbench::params::tmpnodev_report,
-  $tmpnodev_manage         = $cisbench::params::tmpnodev_manage,
-  $tmpnosuid_report        = $cisbench::params::tmpnosuid_report,
-  $tmpnosuid_manage        = $cisbench::params::tmpnosuid_manage,
-  $tmpnoexec_report        = $cisbench::params::tmpnoexec_report,
-  $tmpnoexec_manage        = $cisbench::params::tmpnoexec_manage,
-  $tmpbindmount_report     = $cisbench::params::tmpbindmount_report,
-  $tmpbindmount_manage     = $cisbench::params::tmpbindmount_manage,) inherits cisbench::params {
-  if $::cis['is_tmpseperatemount'] == false and $tmpseperatemount_report == true {
-    notify { "/tmp is not on a separate mount. Failed tmpseperatemount_report check.": }
+  $tmpseparatemount_report         = $cisbench::params::tmpseparatemount_report,
+  $varseparatemount_report         = $cisbench::params::varseparatemount_report,
+  $varlogseparatemount_report      = $cisbench::params::varlogseparatemount_report,
+  $varlogauditseparatemount_report = $cisbench::params::varlogauditseparatemount_report,
+  $tmpnodev_report                 = $cisbench::params::tmpnodev_report,
+  $tmpnodev_manage                 = $cisbench::params::tmpnodev_manage,
+  $tmpnosuid_report                = $cisbench::params::tmpnosuid_report,
+  $tmpnosuid_manage                = $cisbench::params::tmpnosuid_manage,
+  $tmpnoexec_report                = $cisbench::params::tmpnoexec_report,
+  $tmpnoexec_manage                = $cisbench::params::tmpnoexec_manage,
+  $tmpbindmount_report             = $cisbench::params::tmpbindmount_report,
+  $tmpbindmount_manage             = $cisbench::params::tmpbindmount_manage,) inherits cisbench::params {
+  if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
+    notify { "/tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
 
-  if $::cis['is_varseperatemount'] == false and $tmpseperatemount_report == true {
-    notify { "/var is not on a separate mount. Failed varseperatemount_report check.": }
+  if $::cis['is_varseparatemount'] == false and $varseparatemount_report == true {
+    notify { "/var is not on a separate mount. Failed varseparatemount_report check.": }
+  }
+
+  if $::cis['is_varlogseparatemount'] == false and $varlogseparatemount_report == true {
+    notify { "/var/log is not on a separate mount. Failed varlogseparatemount_report check.": }
+  }
+
+  if $::cis['is_varlogauditseparatemount'] == false and $varlogauditseparatemount_report == true {
+    notify { "/var/log/audit is not on a separate mount. Failed varlogauditseparatemount_report check.": }
   }
 
   if $::cis['is_tmpnodev'] == false and $tmpnodev_report == true {
@@ -42,7 +52,7 @@ class cisbench::filesystem (
   }
 
   if $tmpnodev_manage == true or $tmpnosuid_manage == true or $tmpnoexec_manage == true {
-    if $::cis['is_tmpseperatemount'] == true {
+    if $::cis['is_tmpseparatemount'] == true {
       mount { '/tmp':
         ensure  => 'mounted',
         dump    => '1',
@@ -52,7 +62,7 @@ class cisbench::filesystem (
         target  => '/etc/fstab',
       }
     } else {
-      fail("Not able to manage /tmp mount options, because /tmp is not a seperate mount. Eiter Make /tmp seperate mount or disable the manage options for /tmp device of the cis module."
+      fail("Not able to manage /tmp mount options, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /tmp device of the cis module."
       )
     }
   }
@@ -62,7 +72,7 @@ class cisbench::filesystem (
   }
 
   if $tmpbindmount_manage == true {
-    if $::cis['is_tmpseperatemount'] == true {
+    if $::cis['is_tmpseparatemount'] == true {
       mount { '/var/tmp':
         ensure  => 'mounted',
         device  => '/tmp',
@@ -73,9 +83,8 @@ class cisbench::filesystem (
         target  => '/etc/fstab',
       }
     } else {
-      fail("Not able to do /var/tmp bindmount to /tmp, because /tmp is not a seperate mount. Eiter Make /tmp seperate mount or disable the manage options for /var/tmp bindmount device of the cis module."
+      fail("Not able to do /var/tmp bind mount to /tmp, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /var/tmp bindmount device of the cis module."
       )
     }
-
   }
 }

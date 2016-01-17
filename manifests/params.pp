@@ -13,8 +13,10 @@
 class cisbench::params (
   $cisleveldefaults = 1,
   $managediffs      = true) {
-  $tmpseperatemount_report = true
-  $varseperatemount_report = true
+  $tmpseparatemount_report = true
+  $varseparatemount_report = true
+  $varlogseparatemount_report = true
+  $varlogauditseparatemount_report = true
   $tmpnodev_report = true
   $tmpnodev_manage = $managediffs
   $tmpnosuid_report = true
