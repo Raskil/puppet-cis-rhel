@@ -7,33 +7,33 @@ Facter.add(:cis) do
   setcode do
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/tmp[[:space:]]\' /etc/fstab')
     if returnval != ''
-      cishash['is_tmpseperatemount'] =  true
+      cishash['is_tmpseparatemount'] =  true
     else
-      cishash['is_tmpseperatemount'] =  false
+      cishash['is_tmpseparatemount'] =  false
     end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/var/log[[:space:]]\' /etc/fstab')
     if returnval != ''
-      cishash['is_varlogseperatemount'] =  true
+      cishash['is_varlogseparatemount'] =  true
     else
-      cishash['is_varlogseperatemount'] =  false
+      cishash['is_varlogseparatemount'] =  false
     end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/var/log/audit[[:space:]]\' /etc/fstab')
     if returnval != ''
-      cishash['is_varlogauditseperatemount'] =  true
+      cishash['is_varlogauditseparatemount'] =  true
     else
-      cishash['is_varlogauditseperatemount'] =  false
+      cishash['is_varlogauditseparatemount'] =  false
     end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/var[[:space:]]\' /etc/fstab')
     if returnval != ''
-      cishash['is_varseperatemount'] =  true
+      cishash['is_varseparatemount'] =  true
     else
-      cishash['is_varseperatemount'] =  false
+      cishash['is_varseparatemount'] =  false
     end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/home[[:space:]]\' /etc/fstab')
     if returnval != ''
-      cishash['is_homeseperatemount'] =  true
+      cishash['is_homeseparatemount'] =  true
     else
-      cishash['is_homeseperatemount'] =  false
+      cishash['is_homeseparatemount'] =  false
     end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/tmp[[:space:]]\' /etc/fstab | grep nodev')
     if returnval != ''
