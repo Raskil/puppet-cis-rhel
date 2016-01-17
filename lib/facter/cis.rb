@@ -65,7 +65,6 @@ Facter.add(:cis) do
     else
       cishash['is_homenodev'] =  false
     end
-    cishash
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/dev/shm[[:space:]]\' /etc/fstab | grep nodev')
     if returnval != ''
       cishash['is_devshmnodev'] =  true
@@ -84,5 +83,6 @@ Facter.add(:cis) do
     else
       cishash['is_devshmnoexec'] =  false
     end
+    cishash
   end
 end
