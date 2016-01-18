@@ -138,5 +138,3 @@ Facter.add(:cis) do
     cishash
   end
 end
-
-yum check-update --security | grep "package.* needed for security" | cut -d " " -f 1
