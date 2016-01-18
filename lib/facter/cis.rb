@@ -129,6 +129,14 @@ Facter.add(:cis) do
     else
       cishash['is_udfdisabled'] =  false
     end
+    returnval = Facter::Core::Execution.exec('yum check-update --security | grep "package.* needed for security" | cut -d " " -f 1')
+    if returnval == 'No' or returnval == '0'
+      cishash['has_securityupdatesinstallled'] =  true
+    else
+      cishash['has_securityupdatesinstallled'] =  false
+    end
     cishash
   end
 end
+
+yum check-update --security | grep "package.* needed for security" | cut -d " " -f 1
