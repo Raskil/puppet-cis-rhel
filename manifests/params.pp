@@ -44,7 +44,7 @@ class cisbench::params (
       $jffs2disabled_report = false
       $jffs2disabled_manage = false
       $hfsdisabled_report = true
-      $hfsdisabled_manage = false
+      $hfsdisabled_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
