@@ -88,22 +88,22 @@ Facter.add(:cis) do
       cishash['world_writeable_dirs_without_sb'] = returnval.split(/\n+/)
     end
     returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v cramfs')
-    if returnval.include? 'insmod'
-      cishash['is_cramfsdisabled'] =  false
-    else
+    if returnval.include? 'install /bin/true'
       cishash['is_cramfsdisabled'] =  true
+    else
+      cishash['is_cramfsdisabled'] =  false
     end
     returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v freevxfs')
-    if returnval.include? 'insmod'
-      cishash['is_freevxfsdisabled'] =  false
-    else
+    if returnval.include? 'install /bin/true'
       cishash['is_freevxfsdisabled'] =  true
+    else
+      cishash['is_freevxfsdisabled'] =  false
     end
     returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v jffs2')
-    if returnval.include? 'insmod'
-      cishash['is_jffs2disabled'] =  false
-    else
+    if returnval.include? 'install /bin/true'
       cishash['is_jffs2disabled'] =  true
+    else
+      cishash['is_jffs2disabled'] =  false
     end
     cishash
   end
