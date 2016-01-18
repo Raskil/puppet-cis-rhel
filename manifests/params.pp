@@ -33,6 +33,8 @@ class cisbench::params (
   $devshmnosuid_manage = $managediffs
   $devshmnoexec_report = true
   $devshmnoexec_manage = $managediffs
+  $stickybitforwwd_report = true
+  $stickybitforwwd_manage = false
 
   if $cisleveldefaults == 2 {
     $tmp = true

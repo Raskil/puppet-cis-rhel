@@ -31,7 +31,9 @@ class cisbench::filesystem (
   $devshmnosuid_report             = $cisbench::params::devshmnosuid_report,
   $devshmnosuid_manage             = $cisbench::params::devshmnosuid_manage,
   $devshmnoexec_report             = $cisbench::params::devshmnoexec_report,
-  $devshmnoexec_manage             = $cisbench::params::devshmnoexec_manage,) inherits cisbench::params {
+  $devshmnoexec_manage             = $cisbench::params::devshmnoexec_manage,
+  $stickybitforwwd_report          = $cisbench::params::stickybitforwwd_report,
+  $stickybitforwwd_manage          = $cisbench::params::stickybitforwwd,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "/tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
@@ -132,6 +134,20 @@ class cisbench::filesystem (
     notify { "/dev/shm has no noexec option. Failed devshmnoexec_report check.": }
   }
 
+  if $stickybitforwwd_report == true {
+    $filefactsinhib = 'present'
+    if $::cis['is_homenodev'] !!= undef and is_array($::cis['is_homenodev'])
+    notify {"Cisbench module found world writeable directorys without a sticky bit an your system! ${::world_writeable_dirs_without_sb}": }
+  } else {
+    $filefactsinhib = 'absent'
+  }
+
+  file { '/etc/puppet_cis_module_searchwwrdirs':
+    content => template('cisbench/puppet_cis_module_searchwwrdirs.erb'),
+    ensure  => $filefactsinhib,
+  }
+  
+
   if $devshmnodev_manage == true or $devshmnosuid_manage == true or $devshmnoexec_manage == true {
     mount { '/dev/shm':
       ensure  => 'mounted',
@@ -141,6 +157,5 @@ class cisbench::filesystem (
       pass    => '2',
       target  => '/etc/fstab',
     }
-
   }
 }

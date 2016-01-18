@@ -83,6 +83,10 @@ Facter.add(:cis) do
     else
       cishash['is_devshmnoexec'] =  false
     end
+    if File.exist? '/etc/puppet_cis_module_searchwwrdirs'
+      returnval = Facter::Core::Execution.exec('df --local -P | awk {\'if (NR!=1) print $6\'} | xargs -I \'{}\' find \'{}\' -xdev -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null')
+      cishash['world_writeable_dirs_without_sb'] = returnval.split(/\n+/)
+    end
     cishash
   end
 end

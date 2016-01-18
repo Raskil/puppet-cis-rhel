@@ -1,0 +1,11 @@
+# !!!! This File is managed by puppet.
+# Module: <%= @module_name %>
+# Master at: <%= @servername %>
+# Context: <%= @name %>
+# Don't edit manually, puppet will override any
+# modification on next agent run!!!!
+
+This file serves as inhibitor/enable for the cisbench pupept module custom fact
+world_writeable_dirs_without_sb. If this file is existent the fact will search for
+all world writable dirs on the local filesystems that don't have a sticky bit set.
+If this file is missing, the fact does nothing.
