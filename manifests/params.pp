@@ -38,7 +38,7 @@ class cisbench::params (
   case $cisleveldefaults {
     1       : {
       $cramfsdisabled_report = true
-      $cramfsdisabled_manage = false
+      $cramfsdisabled_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
