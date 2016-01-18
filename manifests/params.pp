@@ -37,10 +37,10 @@ class cisbench::params (
 
   case $cisleveldefaults {
     1       : {
-      $cramfsdisabled_report = true
+      $cramfsdisabled_report = false
       $cramfsdisabled_manage = false
       $freevxfsdisabled_report = true
-      $freevxfsdisabled_manage = true
+      $freevxfsdisabled_manage = false
     }
     2       : {
       $cramfsdisabled_report = true
