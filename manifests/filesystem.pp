@@ -136,8 +136,11 @@ class cisbench::filesystem (
 
   if $stickybitforwwd_report == true {
     $filefactsinhib = 'present'
-    if $::cis['is_homenodev'] !!= undef and is_array($::cis['is_homenodev'])
-    notify {"Cisbench module found world writeable directorys without a sticky bit an your system! ${::world_writeable_dirs_without_sb}": }
+
+    if $::cis['is_homenodev'] != undef and is_array($::cis['is_homenodev']) {
+      notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${::world_writeable_dirs_without_sb}"
+      : }
+    }
   } else {
     $filefactsinhib = 'absent'
   }
@@ -146,7 +149,6 @@ class cisbench::filesystem (
     content => template('cisbench/puppet_cis_module_searchwwrdirs.erb'),
     ensure  => $filefactsinhib,
   }
-  
 
   if $devshmnodev_manage == true or $devshmnosuid_manage == true or $devshmnoexec_manage == true {
     mount { '/dev/shm':
