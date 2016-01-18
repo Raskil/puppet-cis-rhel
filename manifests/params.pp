@@ -52,7 +52,7 @@ class cisbench::params (
       $squashfsdisabled_report = true
       $squashfsdisabled_manage = true
       $udfdisabled_report = true
-      $udfdisabled_manage = false
+      $udfdisabled_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
