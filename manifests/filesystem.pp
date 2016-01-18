@@ -47,6 +47,43 @@ class cisbench::filesystem (
   $squashfsdisabled_manage         = $cisbench::params::squashfsdisabled_manage,
   $udfdisabled_report              = $cisbench::params::udfdisabled_report,
   $udfdisabled_manage              = $cisbench::params::udfdisabled_manage,) inherits cisbench::params {
+  validate_bool($tmpseparatemount_report)
+  validate_bool($varseparatemount_report)
+  validate_bool($varlogseparatemount_report)
+  validate_bool($varlogauditseparatemount_report)
+  validate_bool($homeseparatemount_report)
+  validate_bool($tmpnodev_report)
+  validate_bool($tmpnodev_manage)
+  validate_bool($tmpnosuid_report)
+  validate_bool($tmpnosuid_manage)
+  validate_bool($tmpnoexec_report)
+  validate_bool($tmpnoexec_manage)
+  validate_bool($tmpbindmount_report)
+  validate_bool($tmpbindmount_manage)
+  validate_bool($homenodev_report)
+  validate_bool($homenodev_manage)
+  validate_bool($devshmnodev_report)
+  validate_bool($devshmnodev_manage)
+  validate_bool($devshmnosuid_report)
+  validate_bool($devshmnosuid_manage)
+  validate_bool($devshmnoexec_report)
+  validate_bool($devshmnoexec_manage)
+  validate_bool($stickybitforwwd_report)
+  validate_bool($cramfsdisabled_report)
+  validate_bool($cramfsdisabled_manage)
+  validate_bool($freevxfsdisabled_report)
+  validate_bool($freevxfsdisabled_manage)
+  validate_bool($jffs2disabled_report)
+  validate_bool($jffs2disabled_manage)
+  validate_bool($hfsdisabled_report)
+  validate_bool($hfsdisabled_manage)
+  validate_bool($hfsplusdisabled_report)
+  validate_bool($hfsplusdisabled_manage)
+  validate_bool($squashfsdisabled_report)
+  validate_bool($squashfsdisabled_manage)
+  validate_bool($udfdisabled_report)
+  validate_bool($udfdisabled_manage)
+
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "Cisbench: /tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
