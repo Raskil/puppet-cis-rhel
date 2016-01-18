@@ -44,7 +44,9 @@ class cisbench::filesystem (
   $hfsplusdisabled_report          = $cisbench::params::hfsplusdisabled_report,
   $hfsplusdisabled_manage          = $cisbench::params::hfsplusdisabled_manage,
   $squashfsdisabled_report         = $cisbench::params::squashfsdisabled_report,
-  $squashfsdisabled_manage         = $cisbench::params::squashfsdisabled_manage,) inherits cisbench::params {
+  $squashfsdisabled_manage         = $cisbench::params::squashfsdisabled_manage,
+  $udfdisabled_report              = $cisbench::params::udfdisabled_report,
+  $udfdisabled_manage              = $cisbench::params::udfdisabled_manage,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "Cisbench: /tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
@@ -196,6 +198,10 @@ class cisbench::filesystem (
 
   if $::cis['is_squashfsdisabled'] == false and $squashfsdisabled_report == true {
     notify { "Cisbench: squashfs is not disabled in your modprobe configuration!": }
+  }
+
+  if $::cis['is_udfdisabled'] == false and $udfdisabled_report == true {
+    notify { "Cisbench: udf is not disabled in your modprobe configuration!": }
   }
 
   file { '/etc/modprobe.d/CIS.conf':

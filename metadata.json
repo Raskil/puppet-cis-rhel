@@ -9,10 +9,14 @@
   "operatingsystem_support": [
         {
         "operatingsystem":"RedHat",
-        "operatingsystemrelease":[ "6.0"]
+        "operatingsystemrelease":[ "6"]
         },
         {
         "operatingsystem": "OracleLinux",
+        "operatingsystemrelease": [ "6"]
+        },
+        {
+        "operatingsystem": "CentOS",
         "operatingsystemrelease": [ "6"]
         }
        ],

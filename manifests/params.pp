@@ -13,6 +13,8 @@
 class cisbench::params (
   $cisleveldefaults = 1,
   $managediffs      = true) {
+  validate_bool($managediffs)
+  validate_integer($cisleveldefaults)
   $tmpseparatemount_report = true
   $varseparatemount_report = true
   $varlogseparatemount_report = true
@@ -49,6 +51,8 @@ class cisbench::params (
       $hfsplusdisabled_manage = false
       $squashfsdisabled_report = true
       $squashfsdisabled_manage = true
+      $udfdisabled_report = true
+      $udfdisabled_manage = false
     }
     2       : {
       $cramfsdisabled_report = true
@@ -63,6 +67,8 @@ class cisbench::params (
       $hfsplusdisabled_manage = true
       $squashfsdisabled_report = true
       $squashfsdisabled_manage = true
+      $udfdisabled_report = true
+      $udfdisabled_manage = true
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."

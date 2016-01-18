@@ -123,6 +123,12 @@ Facter.add(:cis) do
     else
       cishash['is_squashfsdisabled'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v udf')
+    if returnval.include? 'install /bin/true'
+      cishash['is_udfdisabled'] =  true
+    else
+      cishash['is_udfdisabled'] =  false
+    end
     cishash
   end
 end
