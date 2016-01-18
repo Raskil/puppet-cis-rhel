@@ -93,6 +93,12 @@ Facter.add(:cis) do
     else
       cishash['is_cramfsdisabled'] =  true
     end
+    returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v freevxfs')
+    if returnval.include? 'insmod'
+      cishash['is_freevxfsdisabled'] =  false
+    else
+      cishash['is_freevxfsdisabled'] =  true
+    end
     cishash
   end
 end

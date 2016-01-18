@@ -38,11 +38,15 @@ class cisbench::params (
   case $cisleveldefaults {
     1       : {
       $cramfsdisabled_report = true
-      $cramfsdisabled_manage = true
+      $cramfsdisabled_manage = false
+      $freevxfsdisabled_report = true
+      $freevxfsdisabled_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
       $cramfsdisabled_manage = true
+      $freevxfsdisabled_report = true
+      $freevxfsdisabled_manage = true
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."

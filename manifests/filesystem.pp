@@ -34,7 +34,9 @@ class cisbench::filesystem (
   $devshmnoexec_manage             = $cisbench::params::devshmnoexec_manage,
   $stickybitforwwd_report          = $cisbench::params::stickybitforwwd_report,
   $cramfsdisabled_report           = $cisbench::params::cramfsdisabled_report,
-  $cramfsdisabled_manage           = $cisbench::params::cramfsdisabled_manage,) inherits cisbench::params {
+  $cramfsdisabled_manage           = $cisbench::params::cramfsdisabled_manage,
+  $freevxfsdisabled_report         = $cisbench::params::freevxfsdisabled_report,
+  $freevxfsdisabled_manage         = $cisbench::params::freevxfsdisabled_manage,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "Cisbench: /tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
@@ -166,6 +168,10 @@ class cisbench::filesystem (
 
   if $::cis['is_cramfsdisabled'] == false and $cramfsdisabled_report == true {
     notify { "Cisbench: Cramfs is not disabled in your modprobe configuration!": }
+  }
+
+  if $::cis['is_freevxfsdisabled'] == false and $freevxfsdisabled_report == true {
+    notify { "Cisbench: Freevxfs is not disabled in your modprobe configuration!": }
   }
 
   file { '/etc/modprobe.d/CIS.conf':
