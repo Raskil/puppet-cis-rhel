@@ -36,6 +36,7 @@ class cisbench::params (
   $devshmnoexec_report = true
   $devshmnoexec_manage = $managediffs
   $stickybitforwwd_report = true
+  $securityupdatesinstallled_report = true
 
   case $cisleveldefaults {
     1       : {
