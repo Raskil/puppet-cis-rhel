@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 class cisbench::params (
-  $cisleveldefaults = 2,
+  $cisleveldefaults = 1,
   $managediffs      = true) {
   $tmpseparatemount_report = true
   $varseparatemount_report = true
@@ -34,12 +34,21 @@ class cisbench::params (
   $devshmnoexec_report = true
   $devshmnoexec_manage = $managediffs
   $stickybitforwwd_report = true
-  $cramfsdisabled_report = false
-  $cramfsdisabled_manage = false
 
-  if $cisleveldefaults == 2 {
-    $cramfsdisabled_report = true
-    $cramfsdisabled_manage = false
+  case $cisleveldefaults {
+    1       : {
+      $cramfsdisabled_report = true
+      $cramfsdisabled_manage = false
+    }
+    2       : {
+      $cramfsdisabled_report = true
+      $cramfsdisabled_manage = true
+    }
+    default : {
+      fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."
+      )
+    }
+
   }
 
 }
