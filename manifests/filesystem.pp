@@ -38,7 +38,9 @@ class cisbench::filesystem (
   $freevxfsdisabled_report         = $cisbench::params::freevxfsdisabled_report,
   $freevxfsdisabled_manage         = $cisbench::params::freevxfsdisabled_manage,
   $jffs2disabled_report            = $cisbench::params::jffs2disabled_report,
-  $jffs2disabled_manage            = $cisbench::params::jffs2disabled_manage,) inherits cisbench::params {
+  $jffs2disabled_manage            = $cisbench::params::jffs2disabled_manage,
+  $hfsdisabled_report              = $cisbench::params::hfsdisabled_report,
+  $hfsdisabled_manage              = $cisbench::params::hfsdisabled_manage,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "Cisbench: /tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
@@ -178,6 +180,10 @@ class cisbench::filesystem (
 
   if $::cis['is_jffs2disabled'] == false and $jffs2disabled_report == true {
     notify { "Cisbench: jffs2 is not disabled in your modprobe configuration!": }
+  }
+
+  if $::cis['is_hfsdisabled'] == false and $hfsdisabled_report == true {
+    notify { "Cisbench: hfs is not disabled in your modprobe configuration!": }
   }
 
   file { '/etc/modprobe.d/CIS.conf':

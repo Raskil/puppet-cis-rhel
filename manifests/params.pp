@@ -39,10 +39,12 @@ class cisbench::params (
     1       : {
       $cramfsdisabled_report = false
       $cramfsdisabled_manage = false
-      $freevxfsdisabled_report = true
-      $freevxfsdisabled_manage = true
+      $freevxfsdisabled_report = false
+      $freevxfsdisabled_manage = false
       $jffs2disabled_report = false
       $jffs2disabled_manage = false
+      $hfsdisabled_report = true
+      $hfsdisabled_manage = false
     }
     2       : {
       $cramfsdisabled_report = true
