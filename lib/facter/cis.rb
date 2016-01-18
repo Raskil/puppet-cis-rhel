@@ -99,6 +99,12 @@ Facter.add(:cis) do
     else
       cishash['is_freevxfsdisabled'] =  true
     end
+    returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v jffs2')
+    if returnval.include? 'insmod'
+      cishash['is_jffs2disabled'] =  false
+    else
+      cishash['is_jffs2disabled'] =  true
+    end
     cishash
   end
 end
