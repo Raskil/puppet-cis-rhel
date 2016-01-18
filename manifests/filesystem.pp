@@ -32,37 +32,39 @@ class cisbench::filesystem (
   $devshmnosuid_manage             = $cisbench::params::devshmnosuid_manage,
   $devshmnoexec_report             = $cisbench::params::devshmnoexec_report,
   $devshmnoexec_manage             = $cisbench::params::devshmnoexec_manage,
-  $stickybitforwwd_report          = $cisbench::params::stickybitforwwd_report,) inherits cisbench::params {
+  $stickybitforwwd_report          = $cisbench::params::stickybitforwwd_report,
+  $cramfsdisabled_report           = $cisbench::params::cramfsdisabled_report,
+  $cramfsdisabled_manage           = $cisbench::params::cramfsdisabled_manage,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
-    notify { "/tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
+    notify { "Cisbench: /tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
 
   if $::cis['is_varseparatemount'] == false and $varseparatemount_report == true {
-    notify { "/var is not on a separate mount. Failed varseparatemount_report check.": }
+    notify { "Cisbench: /var is not on a separate mount. Failed varseparatemount_report check.": }
   }
 
   if $::cis['is_varlogseparatemount'] == false and $varlogseparatemount_report == true {
-    notify { "/var/log is not on a separate mount. Failed varlogseparatemount_report check.": }
+    notify { "Cisbench: /var/log is not on a separate mount. Failed varlogseparatemount_report check.": }
   }
 
   if $::cis['is_varlogauditseparatemount'] == false and $varlogauditseparatemount_report == true {
-    notify { "/var/log/audit is not on a separate mount. Failed varlogauditseparatemount_report check.": }
+    notify { "Cisbench: /var/log/audit is not on a separate mount. Failed varlogauditseparatemount_report check.": }
   }
 
   if $::cis['is_homeseparatemount'] == false and $homeseparatemount_report == true {
-    notify { "/home is not on a separate mount. Failed homeseparatemount_report check.": }
+    notify { "Cisbench: /home is not on a separate mount. Failed homeseparatemount_report check.": }
   }
 
   if $::cis['is_tmpnodev'] == false and $tmpnodev_report == true {
-    notify { "/tmp has no nodev option. Failed tmpnodev_report check.": }
+    notify { "Cisbench: /tmp has no nodev option. Failed tmpnodev_report check.": }
   }
 
   if $::cis['is_tmpnosuid'] == false and $tmpnosuid_report == true {
-    notify { "/tmp has no nosuid option. Failed tmpnosuid_report check.": }
+    notify { "Cisbench: /tmp has no nosuid option. Failed tmpnosuid_report check.": }
   }
 
   if $::cis['is_tmpnoexec'] == false and $tmpnoexec_report == true {
-    notify { "/tmp has no noexec option. Failed tmpnoexec_report check.": }
+    notify { "Cisbench: /tmp has no noexec option. Failed tmpnoexec_report check.": }
   }
 
   if $tmpnodev_manage == true or $tmpnosuid_manage == true or $tmpnoexec_manage == true {
@@ -76,13 +78,13 @@ class cisbench::filesystem (
         target  => '/etc/fstab',
       }
     } else {
-      fail("Not able to manage /tmp mount options, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /tmp device of the cis module."
+      fail("Cisbench: Not able to manage /tmp mount options, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /tmp device of the cis module."
       )
     }
   }
 
   if $::cis['is_tmpbindmount'] == false and $tmpbindmount_report == true {
-    notify { "No bindmount /var/tmp /tmp detected. Failed tmpbindmount_report check.": }
+    notify { "Cisbench: No bindmount /var/tmp /tmp detected. Failed tmpbindmount_report check.": }
   }
 
   if $tmpbindmount_manage == true {
@@ -97,13 +99,13 @@ class cisbench::filesystem (
         target  => '/etc/fstab',
       }
     } else {
-      fail("Not able to do /var/tmp bind mount to /tmp, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /var/tmp bindmount device of the cis module."
+      fail("Cisbench: Not able to do /var/tmp bind mount to /tmp, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /var/tmp bindmount device of the cis module."
       )
     }
   }
 
   if $::cis['is_homenodev'] == false and $homenodev_report == true {
-    notify { "/home has no nodev option. Failed homenodev_report check.": }
+    notify { "Cisbench: /home has no nodev option. Failed homenodev_report check.": }
   }
 
   if $homenodev_manage == true {
@@ -116,21 +118,21 @@ class cisbench::filesystem (
         target  => '/etc/fstab',
       }
     } else {
-      fail("Not able to manage /home mount options, because /home is not a separate mount. Eiter Make /home separate mount or disable the manage options for /home device of the cis module."
+      fail("Cisbench: Not able to manage /home mount options, because /home is not a separate mount. Eiter Make /home separate mount or disable the manage options for /home device of the cis module."
       )
     }
   }
 
   if $::cis['is_devshmnodev'] == false and $devshmnodev_report == true {
-    notify { "/dev/shm has no nodev option. Failed devshmnodev_report check.": }
+    notify { "Cisbench: /dev/shm has no nodev option. Failed devshmnodev_report check.": }
   }
 
   if $::cis['is_devshmnosuid'] == false and $devshmnosuid_report == true {
-    notify { "/dev/shm has no nosuid option. Failed devshmnosuid_report check.": }
+    notify { "Cisbench: /dev/shm has no nosuid option. Failed devshmnosuid_report check.": }
   }
 
   if $::cis['is_devshmnoexec'] == false and $devshmnoexec_report == true {
-    notify { "/dev/shm has no noexec option. Failed devshmnoexec_report check.": }
+    notify { "Cisbench: /dev/shm has no noexec option. Failed devshmnoexec_report check.": }
   }
 
   if $stickybitforwwd_report == true {
@@ -140,7 +142,7 @@ class cisbench::filesystem (
       ]) {
       $dirs = join($::cis['world_writeable_dirs_without_sb'], ', ')
 
-      notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${dirs}": }
+      notify { "Cisbench: Cisbench module found world writeable directorys without a sticky bit an your system! ${dirs}": }
     }
   } else {
     $filefactsinhib = 'absent'
@@ -160,5 +162,21 @@ class cisbench::filesystem (
       pass    => '2',
       target  => '/etc/fstab',
     }
+  }
+
+  if $::cis['is_cramfsdisabled'] == false and $cramfsdisabled_report == true {
+    notify { "Cisbench: Cramfs is not disabled in your modprobe configuration!": }
+  }
+
+  file { '/etc/modprobe.d/CIS.conf':
+    ensure   => 'file',
+    content  => template('cisbench/modprobe_CIS.conf'),
+    group    => '0',
+    mode     => '0644',
+    owner    => '0',
+    selrange => 's0',
+    selrole  => 'object_r',
+    seltype  => 'modules_conf_t',
+    seluser  => 'system_u',
   }
 }

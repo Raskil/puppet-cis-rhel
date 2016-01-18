@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 class cisbench::params (
-  $cisleveldefaults = 1,
+  $cisleveldefaults = 2,
   $managediffs      = true) {
   $tmpseparatemount_report = true
   $varseparatemount_report = true
@@ -34,9 +34,12 @@ class cisbench::params (
   $devshmnoexec_report = true
   $devshmnoexec_manage = $managediffs
   $stickybitforwwd_report = true
+  $cramfsdisabled_report = false
+  $cramfsdisabled_manage = false
 
   if $cisleveldefaults == 2 {
-    $tmp = true
+    $cramfsdisabled_report = true
+    $cramfsdisabled_manage = false
   }
 
 }
