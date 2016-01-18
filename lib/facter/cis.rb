@@ -117,6 +117,12 @@ Facter.add(:cis) do
     else
       cishash['is_hfsplusdisabled'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v squashfs')
+    if returnval.include? 'install /bin/true'
+      cishash['is_squashfsdisabled'] =  true
+    else
+      cishash['is_squashfsdisabled'] =  false
+    end
     cishash
   end
 end
