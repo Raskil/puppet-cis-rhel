@@ -43,8 +43,10 @@ class cisbench::params (
       $freevxfsdisabled_manage = false
       $jffs2disabled_report = false
       $jffs2disabled_manage = false
-      $hfsdisabled_report = true
-      $hfsdisabled_manage = true
+      $hfsdisabled_report = false
+      $hfsdisabled_manage = false
+      $hfsplusdisabled_report = true
+      $hfsplusdisabled_manage = false
     }
     2       : {
       $cramfsdisabled_report = true
@@ -53,6 +55,10 @@ class cisbench::params (
       $freevxfsdisabled_manage = true
       $jffs2disabled_report = true
       $jffs2disabled_manage = true
+      $hfsdisabled_report = true
+      $hfsdisabled_manage = true
+      $hfsplusdisabled_report = true
+      $hfsplusdisabled_manage = true
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."

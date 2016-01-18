@@ -111,6 +111,12 @@ Facter.add(:cis) do
     else
       cishash['is_hfsdisabled'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v hfsplus')
+    if returnval.include? 'install /bin/true'
+      cishash['is_hfsplusdisabled'] =  true
+    else
+      cishash['is_hfsplusdisabled'] =  false
+    end
     cishash
   end
 end
