@@ -139,7 +139,9 @@ class cisbench::filesystem (
 
     if $::cis['world_writeable_dirs_without_sb'] != undef and is_array($::cis['world_writeable_dirs_without_sb']) and !empty($::cis['world_writeable_dirs_without_sb'
       ]) {
-      notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${::cis['world_writeable_dirs_without_sb'
+      $dirs = join($::cis['world_writeable_dirs_without_sb'], ' ')
+
+      notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${dirs}'
           ]}": }
     }
   } else {
