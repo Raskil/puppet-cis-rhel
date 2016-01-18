@@ -32,8 +32,7 @@ class cisbench::filesystem (
   $devshmnosuid_manage             = $cisbench::params::devshmnosuid_manage,
   $devshmnoexec_report             = $cisbench::params::devshmnoexec_report,
   $devshmnoexec_manage             = $cisbench::params::devshmnoexec_manage,
-  $stickybitforwwd_report          = $cisbench::params::stickybitforwwd_report,
-  $stickybitforwwd_manage          = $cisbench::params::stickybitforwwd,) inherits cisbench::params {
+  $stickybitforwwd_report          = $cisbench::params::stickybitforwwd_report,) inherits cisbench::params {
   if $::cis['is_tmpseparatemount'] == false and $tmpseparatemount_report == true {
     notify { "/tmp is not on a separate mount. Failed tmpseparatemount_report check.": }
   }
@@ -139,7 +138,7 @@ class cisbench::filesystem (
 
     if $::cis['world_writeable_dirs_without_sb'] != undef and is_array($::cis['world_writeable_dirs_without_sb']) and !empty($::cis['world_writeable_dirs_without_sb'
       ]) {
-      $dirs = join($::cis['world_writeable_dirs_without_sb'], ' ')
+      $dirs = join($::cis['world_writeable_dirs_without_sb'], ', ')
 
       notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${dirs}": }
     }

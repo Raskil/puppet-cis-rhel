@@ -87,6 +87,12 @@ Facter.add(:cis) do
       returnval = Facter::Core::Execution.exec('df --local -P | awk {\'if (NR!=1) print $6\'} | xargs -I \'{}\' find \'{}\' -xdev -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null')
       cishash['world_writeable_dirs_without_sb'] = returnval.split(/\n+/)
     end
+    returnval = Facter::Core::Execution.exec('/sbin/modprobe -n -v cramfs')
+    if returnval.include? 'insmod'
+      cishash['is_cramfsdisabled'] =  false
+    else
+      cishash['is_cramfsdisabled'] =  true
+    end
     cishash
   end
 end
