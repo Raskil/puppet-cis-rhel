@@ -48,7 +48,7 @@ class cisbench::params (
       $hfsplusdisabled_report = false
       $hfsplusdisabled_manage = false
       $squashfsdisabled_report = true
-      $squashfsdisabled_manage = false
+      $squashfsdisabled_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
