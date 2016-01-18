@@ -15,7 +15,7 @@ class cisbench::config_softwareupdates (
   ensure_packages('yum-plugin-security')
 
   if $securityupdatesinstallled_report == true and $::cis['has_securityupdatesinstallled'] == true {
-    notify { "Cisbench: System has available security patches. System needs to be updated!": after => Package['yum-plugin-security'
+    notify { "Cisbench: System has available security patches. System needs to be updated!": require => Package['yum-plugin-security'
         ], }
   }
 }
