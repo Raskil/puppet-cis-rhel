@@ -137,7 +137,7 @@ class cisbench::filesystem (
   if $stickybitforwwd_report == true {
     $filefactsinhib = 'present'
 
-    if $::cis['is_homenodev'] != undef and is_array($::cis['is_homenodev']) {
+    if $::cis['world_writeable_dirs_without_sb'] != undef and is_array($::cis['world_writeable_dirs_without_sb']) {
       notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${::world_writeable_dirs_without_sb}"
       : }
     }
