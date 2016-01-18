@@ -141,8 +141,7 @@ class cisbench::filesystem (
       ]) {
       $dirs = join($::cis['world_writeable_dirs_without_sb'], ' ')
 
-      notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${dirs}'
-          ]}": }
+      notify { "Cisbench module found world writeable directorys without a sticky bit an your system! ${dirs}": }
     }
   } else {
     $filefactsinhib = 'absent'
