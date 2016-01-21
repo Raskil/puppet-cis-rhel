@@ -148,7 +148,7 @@ Facter.add(:cis) do
       cishash['is_yumgpgcheckenabled'] =  false
     end
     returnval = Facter::Core::Execution.exec('chkconfig --list rhnsd | grep :on')
-    if returnvalreturnval.include? ':on'
+    if returnval.include? ':on'
       cishash['is_rhnsdenabled'] =  true
     else
       cishash['is_rhnsdenabled'] =  false
