@@ -35,7 +35,7 @@ class cisbench::params (
   $devshmnosuid_manage = $managediffs
   $devshmnoexec_report = true
   $devshmnoexec_manage = $managediffs
-  $stickybitforwwd_report = true
+  $stickybitforwwd_report = false
   $securityupdatesinstallled_report = true
   $oraclegpgkeyinstalled_report = true
   $oraclegpgkeyinstalled_manage = $managediffs
