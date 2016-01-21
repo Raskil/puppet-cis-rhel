@@ -129,6 +129,12 @@ Facter.add(:cis) do
     else
       cishash['is_udfdisabled'] =  false
     end
+    returnval = Facter::Core::Execution.exec('gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY')
+    if returnval.include? 'Key fingerprint = 4214 4123 FECF C55B 9086  313D 72F9 7B74 EC55 1F03'
+      cishash['has_oraclegpgkey'] =  true
+    else
+      cishash['has_oraclegpgkey'] =  false
+    end
     returnval = Facter::Core::Execution.exec('yum check-update --security | grep "package.* needed for security" | cut -d " " -f 1')
     if returnval == 'No' or returnval == '0'
       cishash['has_securityupdatesinstallled'] =  true

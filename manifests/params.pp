@@ -37,6 +37,8 @@ class cisbench::params (
   $devshmnoexec_manage = $managediffs
   $stickybitforwwd_report = true
   $securityupdatesinstallled_report = true
+  $oraclegpgkeyinstalled_report = true
+  $oraclegpgkeyinstalled_manage = true
 
   case $cisleveldefaults {
     1       : {
