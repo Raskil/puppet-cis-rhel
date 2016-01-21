@@ -57,7 +57,7 @@ class cisbench::config_softwareupdates (
   if $yumgpgcheckenabled_manage == true {
     file { '/etc/yum.conf':
       ensure   => 'file',
-      content  => template('$yumconf_template'),
+      content  => template($yumconf_template),
       group    => '0',
       mode     => '0644',
       owner    => '0',
