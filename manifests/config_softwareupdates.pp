@@ -20,7 +20,8 @@ class cisbench::config_softwareupdates (
   $rhnsddisabled_report             = $cisbench::params::rhnsdenabled_report,
   $rhnsddisabled_manage             = $cisbench::params::rhnsdenabled_manage,
   $yumupdatesddisabled_report       = $cisbench::params::yumupdatesddisabled_report,
-  $yumupdatesddisabled_manage       = $cisbench::params::yumupdatesddisabled_manage,) inherits cisbench::params {
+  $yumupdatesddisabled_manage       = $cisbench::params::yumupdatesddisabled_manage,
+  $updatesinstallled_report         = $cisbench::params::updatesinstallled_report,) inherits cisbench::params {
   ensure_packages('yum-plugin-security')
 
   if $securityupdatesinstallled_report == true and $::cis['has_securityupdatesinstallled'] == false {
@@ -90,6 +91,10 @@ class cisbench::config_softwareupdates (
       ensure => 'stopped',
       enable => false,
     }
+  }
+
+  if $updatesinstallled_report == true and $::cis['has_updatesinstallled'] == false {
+    notify { "Cisbench: System has available patches. System needs to be updated!": }
   }
 
 }

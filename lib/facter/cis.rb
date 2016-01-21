@@ -135,11 +135,11 @@ Facter.add(:cis) do
     else
       cishash['has_oraclegpgkey'] =  false
     end
-    returnval = Facter::Core::Execution.exec('yum check-update --security | grep "package.* needed for security" | cut -d " " -f 1')
-    if returnval == 'No' or returnval == '0'
-      cishash['has_securityupdatesinstallled'] =  true
+    returnval = Facter::Core::Execution.exec('yum check-update --security > /dev/null 2>&1; echo $?')
+    if returnval == '100' or returnval == '1'
+      cishash['has_updatesinstallled'] =  false
     else
-      cishash['has_securityupdatesinstallled'] =  false
+      cishash['has_updatesinstallled'] =  true
     end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]*[[:space:]]*gpgcheck[[:space:]]*=[[:space:]]*1\' /etc/yum.conf')
     if returnval.include? 'gpgcheck'
@@ -158,6 +158,12 @@ Facter.add(:cis) do
       cishash['is_yumupdatesddisabled'] =  false
     else
       cishash['is_yumupdatesddisabled'] =  true
+    end
+    returnval = Facter::Core::Execution.exec('yum check-update > /dev/null 2>&1; echo $?')
+    if returnval == '100' or returnval == '1'
+      cishash['has_updatesinstallled'] =  false
+    else
+      cishash['has_updatesinstallled'] =  true
     end
     cishash
   end

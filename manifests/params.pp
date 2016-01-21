@@ -42,6 +42,7 @@ class cisbench::params (
   $yumgpgcheckenabled_report = true
   $yumgpgcheckenabled_manage = $managediffs
   $yumconf_template = 'cisbench/yum.conf.erb'
+  $updatesinstallled_report = true
 
   case $cisleveldefaults {
     1       : {
