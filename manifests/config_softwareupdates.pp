@@ -36,7 +36,6 @@ class cisbench::config_softwareupdates (
       selrole  => 'object_r',
       seltype  => 'cert_t',
       seluser  => 'system_u',
-      type     => 'file',
     }
 
     exec { 'rpm import oracle oss gpg key':
