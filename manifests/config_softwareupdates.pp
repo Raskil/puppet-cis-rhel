@@ -13,7 +13,10 @@
 class cisbench::config_softwareupdates (
   $securityupdatesinstallled_report = $cisbench::params::securityupdatesinstallled_report,
   $oraclegpgkeyinstalled_report     = $cisbench::params::oraclegpgkeyinstalled_report,
-  $oraclegpgkeyinstalled_manage     = $cisbench::params::oraclegpgkeyinstalled_manage,) inherits cisbench::params {
+  $oraclegpgkeyinstalled_manage     = $cisbench::params::oraclegpgkeyinstalled_manage,
+  $yumgpgcheckenabled_report        = $cisbench::params::yumgpgcheckenabled_report,
+  $yumgpgcheckenabled_manage        = $cisbench::params::yumgpgcheckenabled_manage,
+  $yumconf_template                 = $cisbench::params::yumconf_template,) inherits cisbench::params {
   ensure_packages('yum-plugin-security')
 
   if $securityupdatesinstallled_report == true and $::cis['has_securityupdatesinstallled'] == false {
@@ -42,6 +45,24 @@ class cisbench::config_softwareupdates (
       command     => '/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle_tmp',
       refreshonly => true,
       subscribe   => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle_tmp'],
+    }
+  }
+
+  if $::cis['is_yumgpgcheckenabled'] == false and $yumgpgcheckenabled_report == true {
+    notify { "Cisbench: GPG checking for packages not enabled in your yum.conf!": }
+  }
+
+  if $yumgpgcheckenabled_manage == true {
+    file { '/etc/yum.conf':
+      ensure   => 'file',
+      content  => template('$yumconf_template'),
+      group    => '0',
+      mode     => '0644',
+      owner    => '0',
+      selrange => 's0',
+      selrole  => 'object_r',
+      seltype  => 'etc_t',
+      seluser  => 'system_u',
     }
   }
 

@@ -39,6 +39,9 @@ class cisbench::params (
   $securityupdatesinstallled_report = true
   $oraclegpgkeyinstalled_report = true
   $oraclegpgkeyinstalled_manage = true
+  $yumgpgcheckenabled_report = true
+  $yumgpgcheckenabled_manage = true
+  $yumconf_template = 'cisbench/yum.conf.erb'
 
   case $cisleveldefaults {
     1       : {
