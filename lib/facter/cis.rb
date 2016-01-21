@@ -147,13 +147,13 @@ Facter.add(:cis) do
     else
       cishash['is_yumgpgcheckenabled'] =  false
     end
-    returnval = Facter::Core::Execution.exec('chkconfig --list rhnsd | grep :on')
+    returnval = Facter::Core::Execution.exec('chkconfig --list rhnsd 2>&1 | grep :on')
     if returnval.include? ':on'
       cishash['is_rhnsddisabled'] =  false
     else
       cishash['is_rhnsddisabled'] =  true
     end
-    returnval = Facter::Core::Execution.exec('chkconfig --list yum-updatesd | grep :on')
+    returnval = Facter::Core::Execution.exec('chkconfig --list yum-updatesd 2>&1 | grep :on')
     if returnval.include? ':on'
       cishash['is_yumupdatesddisabled'] =  false
     else
