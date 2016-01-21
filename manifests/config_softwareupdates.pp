@@ -17,8 +17,10 @@ class cisbench::config_softwareupdates (
   $yumgpgcheckenabled_report        = $cisbench::params::yumgpgcheckenabled_report,
   $yumgpgcheckenabled_manage        = $cisbench::params::yumgpgcheckenabled_manage,
   $yumconf_template                 = $cisbench::params::yumconf_template,
-  $rhnsddisabled_report              = $cisbench::params::rhnsdenabled_report,
-  $rhnsddisabled_manage              = $cisbench::params::rhnsdenabled_manage,) inherits cisbench::params {
+  $rhnsddisabled_report             = $cisbench::params::rhnsdenabled_report,
+  $rhnsddisabled_manage             = $cisbench::params::rhnsdenabled_manage,
+  $yumupdatesddisabled_report       = $cisbench::params::yumupdatesddisabled_report,
+  $yumupdatesddisabled_manage       = $cisbench::params::yumupdatesddisabled_manage,) inherits cisbench::params {
   ensure_packages('yum-plugin-security')
 
   if $securityupdatesinstallled_report == true and $::cis['has_securityupdatesinstallled'] == false {
@@ -74,6 +76,17 @@ class cisbench::config_softwareupdates (
 
   if $rhnsddisabled_manage == true {
     service { 'rhnsd':
+      ensure => 'stopped',
+      enable => false,
+    }
+  }
+
+  if $::cis['is_yumupdatesddisabled'] == false and $yumupdatesddisabled_report == true {
+    notify { 'Cisbench: Yum-updatesd service not disabled in all runlevels!': }
+  }
+
+  if $yumupdatesddisabled_manage == true {
+    service { 'yum-updatesd':
       ensure => 'stopped',
       enable => false,
     }

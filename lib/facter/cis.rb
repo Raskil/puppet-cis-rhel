@@ -153,6 +153,12 @@ Facter.add(:cis) do
     else
       cishash['is_rhnsddisabled'] =  true
     end
+    returnval = Facter::Core::Execution.exec('chkconfig --list yum-updatesd | grep :on')
+    if returnval.include? ':on'
+      cishash['is_yumupdatesddisabled'] =  false
+    else
+      cishash['is_yumupdatesddisabled'] =  true
+    end
     cishash
   end
 end
