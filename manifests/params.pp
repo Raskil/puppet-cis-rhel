@@ -12,7 +12,7 @@
 #
 class cisbench::params (
   $cisleveldefaults = 1,
-  $managediffs      = true) {
+  $managediffs      = false) {
   validate_bool($managediffs)
   validate_integer($cisleveldefaults)
   $tmpseparatemount_report = true
@@ -38,9 +38,9 @@ class cisbench::params (
   $stickybitforwwd_report = true
   $securityupdatesinstallled_report = true
   $oraclegpgkeyinstalled_report = true
-  $oraclegpgkeyinstalled_manage = true
+  $oraclegpgkeyinstalled_manage = $managediffs
   $yumgpgcheckenabled_report = true
-  $yumgpgcheckenabled_manage = true
+  $yumgpgcheckenabled_manage = $managediffs
   $yumconf_template = 'cisbench/yum.conf.erb'
 
   case $cisleveldefaults {
@@ -60,25 +60,25 @@ class cisbench::params (
       $udfdisabled_report = false
       $udfdisabled_manage = false
       $rhnsdenabled_report = true
-      $rhnsdenabled_manage = false
+      $rhnsdenabled_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
-      $cramfsdisabled_manage = true
+      $cramfsdisabled_manage = $managediffs
       $freevxfsdisabled_report = true
-      $freevxfsdisabled_manage = true
+      $freevxfsdisabled_manage = $managediffs
       $jffs2disabled_report = true
-      $jffs2disabled_manage = true
+      $jffs2disabled_manage = $managediffs
       $hfsdisabled_report = true
-      $hfsdisabled_manage = true
+      $hfsdisabled_manage = $managediffs
       $hfsplusdisabled_report = true
-      $hfsplusdisabled_manage = true
+      $hfsplusdisabled_manage = $managediffs
       $squashfsdisabled_report = true
-      $squashfsdisabled_manage = true
+      $squashfsdisabled_manage = $managediffs
       $udfdisabled_report = true
-      $udfdisabled_manage = true
+      $udfdisabled_manage = $managediffs
       $rhnsdenabled_report = true
-      $rhnsdenabled_manage = true
+      $rhnsdenabled_manage = $managediffs
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."
