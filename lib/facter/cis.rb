@@ -149,9 +149,9 @@ Facter.add(:cis) do
     end
     returnval = Facter::Core::Execution.exec('chkconfig --list rhnsd | grep :on')
     if returnval.include? ':on'
-      cishash['is_rhnsdenabled'] =  true
+      cishash['is_rhnsddisabled'] =  false
     else
-      cishash['is_rhnsdenabled'] =  false
+      cishash['is_rhnsddisabled'] =  true
     end
     cishash
   end

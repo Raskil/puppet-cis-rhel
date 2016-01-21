@@ -68,7 +68,7 @@ class cisbench::config_softwareupdates (
     }
   }
 
-  if $::cis['is_rhnsdenabled'] == false and $rhnsdenabled_report == true {
+  if $::cis['is_rhnsddisabled'] == false and $rhnsdenabled_report == true {
     notify { 'Cisbench: Rhnsd service not disabled in all runlevels!': }
   }
 
