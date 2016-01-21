@@ -16,7 +16,9 @@ class cisbench::config_softwareupdates (
   $oraclegpgkeyinstalled_manage     = $cisbench::params::oraclegpgkeyinstalled_manage,
   $yumgpgcheckenabled_report        = $cisbench::params::yumgpgcheckenabled_report,
   $yumgpgcheckenabled_manage        = $cisbench::params::yumgpgcheckenabled_manage,
-  $yumconf_template                 = $cisbench::params::yumconf_template,) inherits cisbench::params {
+  $yumconf_template                 = $cisbench::params::yumconf_template,
+  $rhnsdenabled_report              = $cisbench::params::rhnsdenabled_report,
+  $rhnsdenabled_manage              = $cisbench::params::rhnsdenabled_manage,) inherits cisbench::params {
   ensure_packages('yum-plugin-security')
 
   if $securityupdatesinstallled_report == true and $::cis['has_securityupdatesinstallled'] == false {
@@ -25,7 +27,7 @@ class cisbench::config_softwareupdates (
   }
 
   if $::cis['has_oraclegpgkey'] == false and $oraclegpgkeyinstalled_report == true {
-    notify { "Cisbench: Oracle OSS Group gpg key for rpm packages not installed on your system!": }
+    notify { 'Cisbench: Oracle OSS Group gpg key for rpm packages not installed on your system!': }
   }
 
   if $oraclegpgkeyinstalled_manage == true {
@@ -49,7 +51,7 @@ class cisbench::config_softwareupdates (
   }
 
   if $::cis['is_yumgpgcheckenabled'] == false and $yumgpgcheckenabled_report == true {
-    notify { "Cisbench: GPG checking for packages not enabled in your yum.conf!": }
+    notify { 'Cisbench: GPG checking for packages not enabled in your yum.conf!': }
   }
 
   if $yumgpgcheckenabled_manage == true {
@@ -63,6 +65,17 @@ class cisbench::config_softwareupdates (
       selrole  => 'object_r',
       seltype  => 'etc_t',
       seluser  => 'system_u',
+    }
+  }
+
+  if $::cis['is_rhnsdenabled'] == false and $rhnsdenabled_report == true {
+    notify { 'Cisbench: Rhnsd service not disabled in all runlevels!': }
+  }
+
+  if $rhnsdenabled_manage == true {
+    service { 'rhnsd':
+      ensure => 'stopped',
+      enable => false,
     }
   }
 

@@ -142,10 +142,16 @@ Facter.add(:cis) do
       cishash['has_securityupdatesinstallled'] =  false
     end
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]*[[:space:]]*gpgcheck[[:space:]]*=[[:space:]]*1\' /etc/yum.conf')
-    if returnval == 'gpgcheck'
+    if returnval.include? 'gpgcheck'
       cishash['is_yumgpgcheckenabled'] =  true
     else
       cishash['is_yumgpgcheckenabled'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('chkconfig --list rhnsd | grep :on')
+    if returnvalreturnval.include? ':on'
+      cishash['is_rhnsdenabled'] =  true
+    else
+      cishash['is_rhnsdenabled'] =  false
     end
     cishash
   end

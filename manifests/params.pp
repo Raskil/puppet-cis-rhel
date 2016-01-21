@@ -59,6 +59,8 @@ class cisbench::params (
       $squashfsdisabled_manage = false
       $udfdisabled_report = false
       $udfdisabled_manage = false
+      $rhnsdenabled_report = true
+      $rhnsdenabled_manage = false
     }
     2       : {
       $cramfsdisabled_report = true
@@ -75,6 +77,8 @@ class cisbench::params (
       $squashfsdisabled_manage = true
       $udfdisabled_report = true
       $udfdisabled_manage = true
+      $rhnsdenabled_report = true
+      $rhnsdenabled_manage = true
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."
