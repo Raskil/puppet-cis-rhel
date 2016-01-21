@@ -1,0 +1,11 @@
+# !!!! This File is managed by puppet.
+# Module: <%= @module_name %>
+# Master at: <%= @servername %>
+# Context: <%= @name %>
+# Don't edit manually, puppet will override any
+# modification on next agent run!!!!
+
+This file serves as inhibitor/enable for the cisbench pupept module custom fact
+checkrpmintegrity. If this file is existent the fact will search for
+all rpms that have files which no longer match the rpms checksum.
+If this file is missing, the fact does nothing.

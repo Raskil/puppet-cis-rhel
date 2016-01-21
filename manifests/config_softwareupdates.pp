@@ -21,7 +21,8 @@ class cisbench::config_softwareupdates (
   $rhnsddisabled_manage             = $cisbench::params::rhnsdenabled_manage,
   $yumupdatesddisabled_report       = $cisbench::params::yumupdatesddisabled_report,
   $yumupdatesddisabled_manage       = $cisbench::params::yumupdatesddisabled_manage,
-  $updatesinstallled_report         = $cisbench::params::updatesinstallled_report,) inherits cisbench::params {
+  $updatesinstallled_report         = $cisbench::params::updatesinstallled_report,
+  $rpmcheckintegrity_report         = $cisbench::params::rpmcheckintegrity_report) inherits cisbench::params {
   ensure_packages('yum-plugin-security')
 
   if $securityupdatesinstallled_report == true and $::cis['has_securityupdatesinstallled'] == false {
@@ -97,4 +98,21 @@ class cisbench::config_softwareupdates (
     notify { "Cisbench: System has available patches. System needs to be updated!": }
   }
 
+  if $rpmcheckintegrity_report == true {
+    $rpmcheckintegrity_inhib = 'present'
+
+    if $::cis['files_from_rpms_faildchecksum'] != undef and is_array($::cis['files_from_rpms_faildchecksum']) and !empty($::cis['files_from_rpms_faildchecksum'
+      ]) {
+      $files = join($::cis['files_from_rpms_faildchecksum'], ', ')
+
+      notify { "Cisbench: Cisbench module found non-config files which no longer match with rpm checksum: ${files}": }
+    }
+  } else {
+    $rpmcheckintegrity_inhib = 'absent'
+  }
+
+  file { '/etc/puppet_cis_module_checkrpminteg':
+    content => template('cisbench/puppet_cis_module_checkrpminteg.erb'),
+    ensure  => $rpmcheckintegrity_inhib,
+  }
 }

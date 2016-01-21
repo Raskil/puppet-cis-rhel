@@ -252,4 +252,5 @@ class cisbench::filesystem (
     seltype  => 'modules_conf_t',
     seluser  => 'system_u',
   }
+
 }
