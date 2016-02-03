@@ -165,6 +165,11 @@ Facter.add(:cis) do
     else
       cishash['has_updatesinstallled'] =  true
     end
+    if File.exist? '/usr/sbin/aide'
+      cishash['is_aideinstalled'] = true
+    else
+      cishash['is_aideinstalled'] = false
+    end
     if File.exist? '/etc/puppet_cis_module_checkrpminteg'
       returnval = Facter::Core::Execution.exec('rpm -qVa | awk \'$2 != "c" { print $2}\'')
       cishash['files_from_rpms_faildchecksum'] = returnval.split(/\n+/)

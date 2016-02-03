@@ -44,6 +44,7 @@ class cisbench::params (
   $yumconf_template = 'cisbench/yum.conf.erb'
   $updatesinstallled_report = true
   $rpmcheckintegrity_report = false
+  $aidedbpath = '/var/lib/aide/aide.db.gz'
 
   case $cisleveldefaults {
     1       : {
@@ -65,6 +66,8 @@ class cisbench::params (
       $rhnsddisabled_manage = false
       $yumupdatesddisabled_report = true
       $yumupdatesddisabled_manage = false
+      $aideinstalled_report = true
+      $aideinstalled_manage = false
     }
     2       : {
       $cramfsdisabled_report = true
@@ -83,6 +86,8 @@ class cisbench::params (
       $udfdisabled_manage = $managediffs
       $yumupdatesddisabled_report = true
       $yumupdatesddisabled_manage = $managediffs
+      $aideinstalled_report = true
+      $aideinstalled_manage = $managediffs
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."

@@ -14,6 +14,8 @@ class cisbench (
 ) inherits cisbench::params {
   contain cisbench::filesystem
   contain cisbench::config_softwareupdates
+  contain cisbench::aide
   Class['cisbench::filesystem'] ->
-  Class['cisbench::config_softwareupdates']
+  Class['cisbench::config_softwareupdates'] ->
+  Class['cisbench::aide']
 }
