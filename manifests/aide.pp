@@ -56,7 +56,7 @@ class cisbench::aide (
   }
 
   if $::cis['is_aidecroninstalled'] == false and $aidecron_report == true {
-    notify { 'Cisbench: AIDE Intrusion Detection Environment is not installed on your system!': }
+    notify { 'Cisbench: AIDE Intrusion Detection Environment is not run periodically by cron!': }
   }
 
   if $aidecron_manage == true {
