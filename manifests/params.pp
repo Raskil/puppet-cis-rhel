@@ -64,10 +64,10 @@ class cisbench::params (
       $udfdisabled_manage = false
       $rhnsddisabled_report = false
       $rhnsddisabled_manage = false
-      $yumupdatesddisabled_report = true
+      $yumupdatesddisabled_report = false
       $yumupdatesddisabled_manage = false
       $aideinstalled_report = true
-      $aideinstalled_manage = false
+      $aideinstalled_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
