@@ -178,7 +178,7 @@ Facter.add(:cis) do
     if returnval == '0'
       cishash['is_aidecroninstalled'] =  true
     else
-      returnval = Facter::Core::Execution.exec('grep -R log /etc/crontab /etc/cron.* > /dev/null 2>&1; echo $?')
+      returnval = Facter::Core::Execution.exec('grep -R aide /etc/crontab /etc/cron.* > /dev/null 2>&1; echo $?')
       if returnval == '0'
         cishash['is_aidecroninstalled'] =  true
       else
