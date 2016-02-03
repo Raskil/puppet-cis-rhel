@@ -45,7 +45,7 @@ class cisbench::aide (
     file { $aidedbpath:
       owner => 'root',
       group => 'root',
-      mode  => '0600,',
+      mode  => '0600',
     }
   }
 }
