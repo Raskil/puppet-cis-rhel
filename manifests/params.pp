@@ -45,6 +45,8 @@ class cisbench::params (
   $updatesinstallled_report = true
   $rpmcheckintegrity_report = false
   $aidedbpath = '/var/lib/aide/aide.db.gz'
+  $aidedbpath_out = '/var/lib/aide/aide.db.new.gz'
+  $aideconf_path = '/etc/aide.conf'
 
   case $cisleveldefaults {
     1       : {
