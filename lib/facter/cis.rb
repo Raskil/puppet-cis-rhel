@@ -174,6 +174,17 @@ Facter.add(:cis) do
       returnval = Facter::Core::Execution.exec('rpm -qVa | awk \'$2 != "c" { print $2}\'')
       cishash['files_from_rpms_faildchecksum'] = returnval.split(/\n+/)
     end
+    returnval = Facter::Core::Execution.exec('crontab -u root -l | grep aide > /dev/null 2>&1; echo $?')
+    if returnval == '0'
+      cishash['is_aidecroninstalled'] =  true
+    else
+      returnval = Facter::Core::Execution.exec('grep -R log /etc/crontab /etc/cron.* > /dev/null 2>&1; echo $?')
+      if returnval == '0'
+        cishash['is_aidecroninstalled'] =  true
+      else
+        cishash['is_aidecroninstalled'] =  false
+      end
+    end
     cishash
   end
 end
