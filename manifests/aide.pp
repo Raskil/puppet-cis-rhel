@@ -43,9 +43,13 @@ class cisbench::aide (
     }
 
     file { $aidedbpath:
-      owner => 'root',
-      group => 'root',
-      mode  => '0600',
+      owner    => 'root',
+      group    => 'root',
+      mode     => '0600',
+      selrange => 's0',
+      selrole  => 'object_r',
+      seltype  => 'aide_db_t',
+      seluser  => 'system_u',
     }
   }
 }
