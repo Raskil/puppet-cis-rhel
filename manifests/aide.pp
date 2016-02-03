@@ -15,7 +15,9 @@ class cisbench::aide (
   $aideinstalled_manage = $cisbench::params::aideinstalled_manage,
   $aidedbpath           = $cisbench::params::aidedbpath,
   $aidedbpath_out       = $cisbench::params::aidedbpath_out,
-  $aideconf_path        = $cisbench::params::aideconf_path,) inherits cisbench::params {
+  $aideconf_path        = $cisbench::params::aideconf_path,
+  $aidecron_report      = $cisbench::params::aidecron_report,
+  $aidecron_manage      = $cisbench::params::aidecron_manage,) inherits cisbench::params {
   if $::cis['is_aideinstalled'] == false and $aideinstalled_report == true {
     notify { 'Cisbench: AIDE Intrusion Detection Environment is not installed on your system!': }
   }
@@ -49,6 +51,24 @@ class cisbench::aide (
       selrange => 's0',
       selrole  => 'object_r',
       seltype  => 'aide_db_t',
+      seluser  => 'system_u',
+    }
+  }
+
+  if $::cis['is_aidecroninstalled'] == false and $aidecron_report == true {
+    notify { 'Cisbench: AIDE Intrusion Detection Environment is not installed on your system!': }
+  }
+
+  if $aidecron_manage == true {
+    file { '/etc/cron.daily/aide':
+      ensure   => 'file',
+      content  => template('cisbench/aide.erb'),
+      group    => 'root',
+      mode     => '0700',
+      owner    => 'root',
+      selrange => 's0',
+      selrole  => 'object_r',
+      seltype  => 'bin_t',
       seluser  => 'system_u',
     }
   }

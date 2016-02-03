@@ -1,0 +1,9 @@
+#!/bin/bash
+# !!!! This File is managed by puppet.
+# Module: <%= @module_name %>
+# Master at: <%= @servername %>
+# Context: <%= @name %>
+# Don't edit manually, puppet will override any
+# modification on next agent run!!!!
+
+nice -19 /usr/local/bin/aide --config='<%= @aideconf_path -%>' -C

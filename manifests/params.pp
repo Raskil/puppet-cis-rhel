@@ -68,8 +68,10 @@ class cisbench::params (
       $rhnsddisabled_manage = false
       $yumupdatesddisabled_report = false
       $yumupdatesddisabled_manage = false
-      $aideinstalled_report = true
-      $aideinstalled_manage = true
+      $aideinstalled_report = false
+      $aideinstalled_manage = false
+      $aidecron_report = true
+      $aidecron_manage = false
     }
     2       : {
       $cramfsdisabled_report = true
@@ -90,6 +92,8 @@ class cisbench::params (
       $yumupdatesddisabled_manage = $managediffs
       $aideinstalled_report = true
       $aideinstalled_manage = $managediffs
+      $aidecron_report = true
+      $aidecron_manage = $managediffs
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."
