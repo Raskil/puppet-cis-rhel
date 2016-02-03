@@ -71,7 +71,7 @@ class cisbench::params (
       $aideinstalled_report = false
       $aideinstalled_manage = false
       $aidecron_report = true
-      $aidecron_manage = false
+      $aidecron_manage = true
     }
     2       : {
       $cramfsdisabled_report = true
