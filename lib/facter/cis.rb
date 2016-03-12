@@ -185,6 +185,30 @@ Facter.add(:cis) do
         cishash['is_aidecroninstalled'] =  false
       end
     end
+    returnval = Facter::Core::Execution.exec('grep selinux=0 /etc/grub.conf')
+    if returnval == '0'
+      cishash['is_selinuxbootenabled'] =  true
+    else
+      cishash['is_selinuxbootenabled'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('grep enforcing=0 /etc/grub.conf')
+    if returnval == '0'
+      cishash['is_selinuxbootenforcing'] =  true
+    else
+      cishash['is_selinuxbootenforcing'] =  false
+    end    
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]*[[:space:]]*SELINUX[[:space:]]*=[[:space:]]*enforcing\' /etc/selinux/config')
+    if returnval.include? 'gpgcheck'
+      cishash['is_selinuxconfigenforcing'] =  true
+    else
+      cishash['is_selinuxconfigenforcing'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('getenforce')
+    if returnval.include? 'enforcing'
+      cishash['is_selinuxenforcing'] =  true
+    else
+      cishash['is_selinuxenforcing'] =  false
+    end
     cishash
   end
 end
