@@ -40,7 +40,6 @@ class cisbench::selinux (
       selrole  => 'object_r',
       seltype  => 'selinux_config_t',
       seluser  => 'system_u',
-      type     => 'file',
     }
   }
 }
