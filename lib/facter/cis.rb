@@ -209,6 +209,12 @@ Facter.add(:cis) do
     else
       cishash['is_selinuxenforcing'] =  false
     end
+    returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]*[[:space:]]*SELINUXTYPE[[:space:]]*=[[:space:]]*[targeted\|mls]\' /etc/selinux/config 2>&1; echo $?')
+    if returnval == '0'
+      cishash['is_selinuxpolicyrecommended'] =  true
+    else
+      cishash['is_selinuxpolicyrecommended'] =  false
+    end
     cishash
   end
 end
