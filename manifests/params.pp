@@ -47,6 +47,8 @@ class cisbench::params (
   $aidedbpath = '/var/lib/aide/aide.db.gz'
   $aidedbpath_out = '/var/lib/aide/aide.db.new.gz'
   $aideconf_path = '/etc/aide.conf'
+  $selinuxgrubenabled_report = true
+  $selinuxgrubenabled_manage = false
 
   case $cisleveldefaults {
     1       : {
@@ -72,6 +74,9 @@ class cisbench::params (
       $aideinstalled_manage = false
       $aidecron_report = true
       $aidecron_manage = true
+      $selinuxgrubenabled_report = true
+      $selinuxgrubenabled_manage = false
+
     }
     2       : {
       $cramfsdisabled_report = true
@@ -94,10 +99,12 @@ class cisbench::params (
       $aideinstalled_manage = $managediffs
       $aidecron_report = true
       $aidecron_manage = $managediffs
+      $selinuxgrubenabled_report = true
+      $selinuxgrubenabled_manage = false
+
     }
     default : {
-      fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}."
-      )
+      fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}.")
     }
 
   }

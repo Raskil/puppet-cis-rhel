@@ -15,7 +15,10 @@ class cisbench (
   contain cisbench::filesystem
   contain cisbench::config_softwareupdates
   contain cisbench::aide
+  contain cisbench::selinux
+
   Class['cisbench::filesystem'] ->
   Class['cisbench::config_softwareupdates'] ->
-  Class['cisbench::aide']
+  Class['cisbench::aide'] ->
+  Class['cisbench::selinux']
 }
