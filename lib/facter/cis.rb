@@ -185,13 +185,13 @@ Facter.add(:cis) do
         cishash['is_aidecroninstalled'] =  false
       end
     end
-    returnval = Facter::Core::Execution.exec('grep selinux=0 /etc/grub.conf')
+    returnval = Facter::Core::Execution.exec('grep selinux=0 /etc/grub.conf > /dev/null 2>&1; echo $?')
     if returnval == '0'
       cishash['is_selinuxbootenabled'] =  false
     else
       cishash['is_selinuxbootenabled'] =  true
     end
-    returnval = Facter::Core::Execution.exec('grep enforcing=0 /etc/grub.conf')
+    returnval = Facter::Core::Execution.exec('grep enforcing=0 /etc/grub.conf > /dev/null 2>&1; echo $?')
     if returnval == '0'
       cishash['is_selinuxbootenforcing'] =  false
     else
