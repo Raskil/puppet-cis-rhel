@@ -18,7 +18,8 @@ class cisbench::selinux (
   $selinuxconfigenforcing_selinux     = $cisbench::params::selinuxconfigenforcing_selinux,
   $selinuxconfigenforcing_selinuxtype = $cisbench::params::selinuxconfigenforcing_selinuxtype,
   $selinuxenforcing_report            = $cisbench::params::selinuxenforcing_report,
-  $selinuxenforcing_manage            = $cisbench::params::selinuxenforcing_manage) inherits cisbench::params {
+  $selinuxenforcing_manage            = $cisbench::params::selinuxenforcing_manage,
+  $selinuxpolicyrecommended_report    = $cisbench::params::selinuxpolicyrecommended_report,) inherits cisbench::params {
   if $::cis['is_selinuxbootenabled'] == false and $selinuxgrubenabled_report == true {
     notify { 'Cisbench: Selinux is disabled in Grub Boot Config!': }
   }
@@ -56,4 +57,7 @@ class cisbench::selinux (
     }
   }
 
+  if $::cis['is_selinuxpolicyrecommended'] == false and $selinuxpolicyrecommended_report == true {
+    notify { 'Cisbench: Selinux not configured to use the recommended policies of targeted or mls!': }
+  }
 }
