@@ -20,6 +20,17 @@ class cisbench::selinux (
   $selinuxenforcing_report            = $cisbench::params::selinuxenforcing_report,
   $selinuxenforcing_manage            = $cisbench::params::selinuxenforcing_manage,
   $selinuxpolicyrecommended_report    = $cisbench::params::selinuxpolicyrecommended_report,) inherits cisbench::params {
+  validate_bool($selinuxgrubenabled_report)
+  validate_bool($selinuxgrubenabled_manage)
+  validate_bool($selinuxconfigenforcing_report)
+  validate_bool($selinuxconfigenforcing_manage)
+  validate_re($selinuxconfigenforcing_selinux, "^[enforcing|permissive|disabled]$', 'Cisbench Module: \$selinuxconfigenforcing_selinux must be a string with one of the following values: \'enforcing|permissive|disabled\'. You supplied: ${selinuxconfigenforcing_selinux}"
+  )
+  validate_string($selinuxconfigenforcing_selinuxtype)
+  validate_bool($selinuxenforcing_report)
+  validate_bool($selinuxenforcing_manage)
+  validate_bool($selinuxpolicyrecommended_report)
+
   if $::cis['is_selinuxbootenabled'] == false and $selinuxgrubenabled_report == true {
     notify { 'Cisbench: Selinux is disabled in Grub Boot Config!': }
   }
