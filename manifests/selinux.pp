@@ -24,8 +24,10 @@ class cisbench::selinux (
   validate_bool($selinuxgrubenabled_manage)
   validate_bool($selinuxconfigenforcing_report)
   validate_bool($selinuxconfigenforcing_manage)
-  validate_re($selinuxconfigenforcing_selinux, '^[enforcing|permissive|disabled]$', "Cisbench Module: \$selinuxconfigenforcing_selinux must be a string with one of the following values: \'enforcing|permissive|disabled\'. You supplied: ${selinuxconfigenforcing_selinux}"
-  )
+  validate_re($selinuxconfigenforcing_selinux, [
+    '^enforcing$',
+    "^permissive$",
+    "^disabled$"], "Cisbench Module: \$selinuxconfigenforcing_selinux must be a string with one of the following values: \'enforcing|permissive|disabled\'. You supplied: ${selinuxconfigenforcing_selinux}")
   validate_string($selinuxconfigenforcing_selinuxtype)
   validate_bool($selinuxenforcing_report)
   validate_bool($selinuxenforcing_manage)
