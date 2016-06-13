@@ -16,7 +16,9 @@ class cisbench::selinux (
   $selinuxconfigenforcing_report      = $cisbench::params::selinuxconfigenforcing_report,
   $selinuxconfigenforcing_manage      = $cisbench::params::selinuxconfigenforcing_manage,
   $selinuxconfigenforcing_selinux     = $cisbench::params::selinuxconfigenforcing_selinux,
-  $selinuxconfigenforcing_selinuxtype = $cisbench::params::selinuxconfigenforcing_selinuxtype,) inherits cisbench::params {
+  $selinuxconfigenforcing_selinuxtype = $cisbench::params::selinuxconfigenforcing_selinuxtype,
+  $selinuxenforcing_report            = $cisbench::params::selinuxenforcing_report,
+  $selinuxenforcing_manage            = $cisbench::params::selinuxenforcing_manage) inherits cisbench::params {
   if $::cis['is_selinuxbootenabled'] == false and $selinuxgrubenabled_report == true {
     notify { 'Cisbench: Selinux is disabled in Grub Boot Config!': }
   }
@@ -42,4 +44,17 @@ class cisbench::selinux (
       seluser  => 'system_u',
     }
   }
+
+  if $::cis['is_selinuxenforcing'] == false and $selinuxenforcing_report == true {
+    notify { 'Cisbench: Selinux is disabled on runtime!': }
+  }
+
+  if $selinuxenforcing_manage == true {
+    exec { '/usr/sbin/setenforce 1':
+      user   => 'root',
+      unless => '/usr/sbin/getenforce 2>&1 | /bin/grep Enforcing',
+    }
+
+  }
+
 }
