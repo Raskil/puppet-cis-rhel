@@ -47,6 +47,8 @@ class cisbench::params (
   $aidedbpath = '/var/lib/aide/aide.db.gz'
   $aidedbpath_out = '/var/lib/aide/aide.db.new.gz'
   $aideconf_path = '/etc/aide.conf'
+  $selinuxconfigenforcing_selinux = 'enforcing'
+  $selinuxconfigenforcing_selinuxtype = 'targeted'
 
   case $cisleveldefaults {
     1       : {
@@ -74,6 +76,8 @@ class cisbench::params (
       $aidecron_manage = true
       $selinuxgrubenabled_report = true
       $selinuxgrubenabled_manage = false
+      $selinuxconfigenforcing_report = false
+      $selinuxconfigenforcing_manage = false
 
     }
     2       : {
@@ -98,7 +102,9 @@ class cisbench::params (
       $aidecron_report = true
       $aidecron_manage = $managediffs
       $selinuxgrubenabled_report = true
-      $selinuxgrubenabled_manage = false
+      $selinuxgrubenabled_manage = $managediffs
+      $selinuxconfigenforcing_report = true
+      $selinuxconfigenforcing_manage = $managediffs
 
     }
     default : {

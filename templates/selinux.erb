@@ -1,0 +1,17 @@
+# !!!! This File is managed by puppet.
+# Module: <%= @module_name %>
+# Master at: <%= @servername %>
+# Context: <%= @name %>
+# Don't edit manually, puppet will override any
+# modification on next agent run!!!!
+#
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=permissive
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted

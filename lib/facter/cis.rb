@@ -198,13 +198,13 @@ Facter.add(:cis) do
       cishash['is_selinuxbootenforcing'] =  true
     end    
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]*[[:space:]]*SELINUX[[:space:]]*=[[:space:]]*enforcing\' /etc/selinux/config')
-    if returnval.include? 'gpgcheck'
+    if returnval.include? 'enforcing'
       cishash['is_selinuxconfigenforcing'] =  true
     else
       cishash['is_selinuxconfigenforcing'] =  false
     end
     returnval = Facter::Core::Execution.exec('getenforce')
-    if returnval.include? 'enforcing'
+    if returnval.include? 'Enforcing'
       cishash['is_selinuxenforcing'] =  true
     else
       cishash['is_selinuxenforcing'] =  false
