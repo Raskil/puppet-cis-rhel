@@ -72,9 +72,9 @@ class cisbench::params (
       $yumupdatesddisabled_manage = false
       $aideinstalled_report = false
       $aideinstalled_manage = false
-      $aidecron_report = true
-      $aidecron_manage = true
-      $selinuxgrubenabled_report = true
+      $aidecron_report = false
+      $aidecron_manage = false
+      $selinuxgrubenabled_report = false
       $selinuxgrubenabled_manage = false
       $selinuxconfigenforcing_report = false
       $selinuxconfigenforcing_manage = false
