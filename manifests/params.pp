@@ -80,6 +80,7 @@ class cisbench::params (
       $selinuxconfigenforcing_manage = false
       $selinuxenforcing_report = false
       $selinuxenforcing_manage = false
+      $selinuxpolicyrecommended_report = false
 
     }
     2       : {
@@ -109,6 +110,7 @@ class cisbench::params (
       $selinuxconfigenforcing_manage = $managediffs
       $selinuxenforcing_report = false
       $selinuxenforcing_manage = $managediffs
+      $selinuxpolicyrecommended_report = true
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}.")
