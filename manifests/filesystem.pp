@@ -235,9 +235,9 @@ class cisbench::filesystem (
     notify { "Cisbench: udf is not disabled in your modprobe configuration!": }
   }
 
-  file { '/etc/modprobe.d/CIS.conf.erb':
+  file { '/etc/modprobe.d/CIS.conf':
     ensure   => 'file',
-    content  => template('cisbench/modprobe_CIS.conf'),
+    content  => template('cisbench/modprobe_CIS.conf.erb'),
     group    => '0',
     mode     => '0644',
     owner    => '0',
