@@ -47,8 +47,6 @@ class cisbench::params (
   $aidedbpath = '/var/lib/aide/aide.db.gz'
   $aidedbpath_out = '/var/lib/aide/aide.db.new.gz'
   $aideconf_path = '/etc/aide.conf'
-  $selinuxgrubenabled_report = true
-  $selinuxgrubenabled_manage = false
 
   case $cisleveldefaults {
     1       : {
