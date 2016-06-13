@@ -192,7 +192,7 @@ Facter.add(:cis) do
       cishash['is_selinuxbootenabled'] =  false
     end
     returnval = Facter::Core::Execution.exec('grep enforcing=0 /etc/grub.conf')
-    if returnval == '0'
+    if returnval == '1'
       cishash['is_selinuxbootenforcing'] =  true
     else
       cishash['is_selinuxbootenforcing'] =  false
