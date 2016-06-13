@@ -121,14 +121,12 @@ class cisbench::filesystem (
       mount { '/tmp':
         ensure  => 'mounted',
         dump    => '1',
-        options => inline_template('defaults<% if @tmpnodev_manage -%>,nodev<% end -%><% if @tmpnosuid_manage -%>,nosuid<% end -%><% if @tmpnoexec_manage -%>,noexec<% end -%>'
-        ),
+        options => inline_template('defaults<% if @tmpnodev_manage -%>,nodev<% end -%><% if @tmpnosuid_manage -%>,nosuid<% end -%><% if @tmpnoexec_manage -%>,noexec<% end -%>'),
         pass    => '2',
         target  => '/etc/fstab',
       }
     } else {
-      fail("Cisbench: Not able to manage /tmp mount options, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /tmp device of the cis module."
-      )
+      fail("Cisbench: Not able to manage /tmp mount options, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /tmp device of the cis module.")
     }
   }
 
@@ -148,8 +146,7 @@ class cisbench::filesystem (
         target  => '/etc/fstab',
       }
     } else {
-      fail("Cisbench: Not able to do /var/tmp bind mount to /tmp, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /var/tmp bindmount device of the cis module."
-      )
+      fail("Cisbench: Not able to do /var/tmp bind mount to /tmp, because /tmp is not a separate mount. Eiter Make /tmp separate mount or disable the manage options for /var/tmp bindmount device of the cis module.")
     }
   }
 
@@ -167,8 +164,7 @@ class cisbench::filesystem (
         target  => '/etc/fstab',
       }
     } else {
-      fail("Cisbench: Not able to manage /home mount options, because /home is not a separate mount. Eiter Make /home separate mount or disable the manage options for /home device of the cis module."
-      )
+      fail("Cisbench: Not able to manage /home mount options, because /home is not a separate mount. Eiter Make /home separate mount or disable the manage options for /home device of the cis module.")
     }
   }
 
@@ -187,8 +183,7 @@ class cisbench::filesystem (
   if $stickybitforwwd_report == true {
     $filefactsinhib = 'present'
 
-    if $::cis['world_writeable_dirs_without_sb'] != undef and is_array($::cis['world_writeable_dirs_without_sb']) and !empty($::cis['world_writeable_dirs_without_sb'
-      ]) {
+    if $::cis['world_writeable_dirs_without_sb'] != undef and is_array($::cis['world_writeable_dirs_without_sb']) and !empty($::cis['world_writeable_dirs_without_sb']) {
       $dirs = join($::cis['world_writeable_dirs_without_sb'], ', ')
 
       notify { "Cisbench: Cisbench module found world writeable directorys without a sticky bit an your system! ${dirs}": }
@@ -206,8 +201,7 @@ class cisbench::filesystem (
     mount { '/dev/shm':
       ensure  => 'mounted',
       dump    => '1',
-      options => inline_template('defaults<% if @devshmnodev_manage -%>,nodev<% end -%><% if @devshmnosuid_manage -%>,nosuid<% end -%><% if @devshmnoexec_manage -%>,noexec<% end -%>'
-      ),
+      options => inline_template('defaults<% if @devshmnodev_manage -%>,nodev<% end -%><% if @devshmnosuid_manage -%>,nosuid<% end -%><% if @devshmnoexec_manage -%>,noexec<% end -%>'),
       pass    => '2',
       target  => '/etc/fstab',
     }
@@ -241,7 +235,7 @@ class cisbench::filesystem (
     notify { "Cisbench: udf is not disabled in your modprobe configuration!": }
   }
 
-  file { '/etc/modprobe.d/CIS.conf':
+  file { '/etc/modprobe.d/CIS.conf.erb':
     ensure   => 'file',
     content  => template('cisbench/modprobe_CIS.conf'),
     group    => '0',

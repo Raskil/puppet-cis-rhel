@@ -32,7 +32,7 @@ class cisbench::selinux (
   if $selinuxconfigenforcing_manage == true {
     file { '/etc/selinux/config':
       ensure   => 'file',
-      content  => template('cisbench/selinux'),
+      content  => template('cisbench/selinux.erb'),
       group    => 'root',
       mode     => '0644',
       owner    => 'root',
