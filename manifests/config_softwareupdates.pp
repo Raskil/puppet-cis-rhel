@@ -17,8 +17,8 @@ class cisbench::config_softwareupdates (
   $yumgpgcheckenabled_report        = $cisbench::params::yumgpgcheckenabled_report,
   $yumgpgcheckenabled_manage        = $cisbench::params::yumgpgcheckenabled_manage,
   $yumconf_template                 = $cisbench::params::yumconf_template,
-  $rhnsddisabled_report             = $cisbench::params::rhnsdenabled_report,
-  $rhnsddisabled_manage             = $cisbench::params::rhnsdenabled_manage,
+  $rhnsddisabled_report             = $cisbench::params::rhnsddisabled_report,
+  $rhnsddisabled_manage             = $cisbench::params::rhnsddisabled_manage,
   $yumupdatesddisabled_report       = $cisbench::params::yumupdatesddisabled_report,
   $yumupdatesddisabled_manage       = $cisbench::params::yumupdatesddisabled_manage,
   $updatesinstallled_report         = $cisbench::params::updatesinstallled_report,
@@ -26,8 +26,7 @@ class cisbench::config_softwareupdates (
   ensure_packages('yum-plugin-security')
 
   if $securityupdatesinstallled_report == true and $::cis['has_securityupdatesinstallled'] == false {
-    notify { "Cisbench: System has available security patches. System needs to be updated!": require => Package['yum-plugin-security'
-        ], }
+    notify { "Cisbench: System has available security patches. System needs to be updated!": require => Package['yum-plugin-security'], }
   }
 
   if $::cis['has_oraclegpgkey'] == false and $oraclegpgkeyinstalled_report == true {
@@ -101,8 +100,7 @@ class cisbench::config_softwareupdates (
   if $rpmcheckintegrity_report == true {
     $rpmcheckintegrity_inhib = 'present'
 
-    if $::cis['files_from_rpms_faildchecksum'] != undef and is_array($::cis['files_from_rpms_faildchecksum']) and !empty($::cis['files_from_rpms_faildchecksum'
-      ]) {
+    if $::cis['files_from_rpms_faildchecksum'] != undef and is_array($::cis['files_from_rpms_faildchecksum']) and !empty($::cis['files_from_rpms_faildchecksum']) {
       $files = join($::cis['files_from_rpms_faildchecksum'], ', ')
 
       notify { "Cisbench: Cisbench module found non-config files which no longer match with rpm checksum: ${files}": }

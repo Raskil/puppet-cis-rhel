@@ -54,7 +54,6 @@ class cisbench::selinux (
       user   => 'root',
       unless => '/usr/sbin/getenforce 2>&1 | /bin/grep Enforcing',
     }
-
   }
 
 }
