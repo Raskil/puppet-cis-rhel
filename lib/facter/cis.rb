@@ -227,9 +227,9 @@ Facter.add(:cis) do
     else
       cishash['has_nomcstransrpm'] =  false
     end
-    returnval = Facter::Core::Execution.exec('ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr \':\' \' \' | awk \'{ print $NF }\' 2> /dev/null')
+    returnval = Facter::Core::Execution.exec('ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr \':\' \' \' | awk \'{ print $NF "-" $5 }\' 2> /dev/null')
     cishash['selinux_unconfined_deamons'] = returnval.split(/\n+/)
-    returnval = Facter::Core::Execution.exec('ps -eZ | egrep "unconfined" | egrep -vw "tr|ps|egrep|bash|awk" | tr \':\' \' \' | awk \'{ print $NF }\' 2> /dev/null')
+    returnval = Facter::Core::Execution.exec('ps -eZ | egrep "unconfined" | egrep -vw "tr|ps|egrep|bash|awk" | tr \':\' \' \' | awk \'{ print $NF "-" $5 }\' 2> /dev/null')
     cishash['selinux_unconfined_deamons'] + returnval.split(/\n+/)  
     cishash
   end
