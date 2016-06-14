@@ -221,6 +221,12 @@ Facter.add(:cis) do
     else
       cishash['has_nosetroubleshootrpm'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q mcstrans > /dev/null 2>&1; echo $?')
+    if returnval == '1'
+      cishash['has_nomcstransrpm'] =  true
+    else
+      cishash['has_nomcstransrpm'] =  false
+    end
     cishash
   end
 end

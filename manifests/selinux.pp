@@ -21,7 +21,9 @@ class cisbench::selinux (
   $selinuxenforcing_manage            = $cisbench::params::selinuxenforcing_manage,
   $selinuxpolicyrecommended_report    = $cisbench::params::selinuxpolicyrecommended_report,
   $nosetroubleshootrpm_manage         = $cisbench::params::nosetroubleshootrpm_manage,
-  $nosetroubleshootrpm_report         = $cisbench::params::nosetroubleshootrpm_report) inherits cisbench::params {
+  $nosetroubleshootrpm_report         = $cisbench::params::nosetroubleshootrpm_report,
+  $nomcstransrpm_manage               = $cisbench::params::nomcstransrpm_manage,
+  $nomcstransrpm_report               = $cisbench::params::nomcstransrpm_report) inherits cisbench::params {
   validate_bool($selinuxgrubenabled_report)
   validate_bool($selinuxgrubenabled_manage)
   validate_bool($selinuxconfigenforcing_report)
@@ -34,6 +36,8 @@ class cisbench::selinux (
   validate_bool($selinuxenforcing_report)
   validate_bool($selinuxenforcing_manage)
   validate_bool($selinuxpolicyrecommended_report)
+  validate_bool($nosetroubleshootrpm_manage)
+  validate_bool($nosetroubleshootrpm_report)
 
   if $::cis['is_selinuxbootenabled'] == false and $selinuxgrubenabled_report == true {
     notify { 'Cisbench: Selinux is disabled in Grub Boot Config!': }
@@ -82,6 +86,14 @@ class cisbench::selinux (
 
   if $nosetroubleshootrpm_manage == true {
     package { 'setroubleshoot': ensure => 'absent', }
+  }
+
+  if $::cis['has_nomcstransrpm'] == false and $nomcstransrpm_report == true {
+    notify { 'Cisbench: mcstrans package is installed!': }
+  }
+
+  if $nomcstransrpm_manage == true {
+    package { 'mcstrans': ensure => 'absent', }
   }
 
 }
