@@ -23,7 +23,8 @@ class cisbench::selinux (
   $nosetroubleshootrpm_manage         = $cisbench::params::nosetroubleshootrpm_manage,
   $nosetroubleshootrpm_report         = $cisbench::params::nosetroubleshootrpm_report,
   $nomcstransrpm_manage               = $cisbench::params::nomcstransrpm_manage,
-  $nomcstransrpm_report               = $cisbench::params::nomcstransrpm_report) inherits cisbench::params {
+  $nomcstransrpm_report               = $cisbench::params::nomcstransrpm_report,
+  $unconfinedprocesses_report         = $cisbench::params::unconfinedprocesses_report,) inherits cisbench::params {
   validate_bool($selinuxgrubenabled_report)
   validate_bool($selinuxgrubenabled_manage)
   validate_bool($selinuxconfigenforcing_report)
@@ -94,6 +95,12 @@ class cisbench::selinux (
 
   if $nomcstransrpm_manage == true {
     package { 'mcstrans': ensure => 'absent', }
+  }
+
+  if $unconfinedprocesses_report == true and $::cis['selinux_unconfined_deamons'] != undef and is_array($::cis['selinux_unconfined_deamons']) and !empty($::cis['selinux_unconfined_deamons']) {
+    $deamons = join($::cis['selinux_unconfined_deamons'], ', ')
+
+    notify { "Cisbench: Cisbench module found unconfined processes on your system! ${deamons}": }
   }
 
 }

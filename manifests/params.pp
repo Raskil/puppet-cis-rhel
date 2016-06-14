@@ -85,6 +85,7 @@ class cisbench::params (
       $nosetroubleshootrpm_manage = false
       $nomcstransrpm_report = false
       $nomcstransrpm_manage = false
+      $unconfinedprocesses_report = false
 
     }
     2       : {
@@ -119,6 +120,7 @@ class cisbench::params (
       $nosetroubleshootrpm_manage = $managediffs
       $nomcstransrpm_report = true
       $nomcstransrpm_manage = $managediffs
+      $unconfinedprocesses_report = true
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}.")
