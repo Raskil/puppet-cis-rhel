@@ -215,6 +215,12 @@ Facter.add(:cis) do
     else
       cishash['is_selinuxpolicyrecommended'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q setroubleshoot > /dev/null 2>&1; echo $?')
+    if returnval == '1'
+      cishash['has_nosetroubleshootrpm'] =  true
+    else
+      cishash['has_nosetroubleshootrpm'] =  false
+    end
     cishash
   end
 end

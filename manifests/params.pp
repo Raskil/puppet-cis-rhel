@@ -81,6 +81,8 @@ class cisbench::params (
       $selinuxenforcing_report = false
       $selinuxenforcing_manage = false
       $selinuxpolicyrecommended_report = false
+      $nosetroubleshootrpm_report = false
+      $nosetroubleshootrpm_manage = false
 
     }
     2       : {
@@ -111,6 +113,8 @@ class cisbench::params (
       $selinuxenforcing_report = false
       $selinuxenforcing_manage = $managediffs
       $selinuxpolicyrecommended_report = true
+      $nosetroubleshootrpm_report = true
+      $nosetroubleshootrpm_manage = $managediffs
     }
     default : {
       fail("Cisbench: Params Class does not support values other than 1 or 2 for parameter \$cisleveldefaults. You supplied: ${cisleveldefaults}.")

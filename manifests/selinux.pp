@@ -19,7 +19,9 @@ class cisbench::selinux (
   $selinuxconfigenforcing_selinuxtype = $cisbench::params::selinuxconfigenforcing_selinuxtype,
   $selinuxenforcing_report            = $cisbench::params::selinuxenforcing_report,
   $selinuxenforcing_manage            = $cisbench::params::selinuxenforcing_manage,
-  $selinuxpolicyrecommended_report    = $cisbench::params::selinuxpolicyrecommended_report,) inherits cisbench::params {
+  $selinuxpolicyrecommended_report    = $cisbench::params::selinuxpolicyrecommended_report,
+  $nosetroubleshootrpm_manage         = $cisbench::params::nosetroubleshootrpm_manage,
+  $nosetroubleshootrpm_report         = $cisbench::params::nosetroubleshootrpm_report) inherits cisbench::params {
   validate_bool($selinuxgrubenabled_report)
   validate_bool($selinuxgrubenabled_manage)
   validate_bool($selinuxconfigenforcing_report)
@@ -73,4 +75,13 @@ class cisbench::selinux (
   if $::cis['is_selinuxpolicyrecommended'] == false and $selinuxpolicyrecommended_report == true {
     notify { 'Cisbench: Selinux not configured to use the recommended policies of targeted or mls!': }
   }
+
+  if $::cis['has_nosetroubleshootrpm'] == false and $nosetroubleshootrpm_report == true {
+    notify { 'Cisbench: Setroubleshoot package is installed!': }
+  }
+
+  if $nosetroubleshootrpm_manage == true {
+    package { 'setroubleshoot': ensure => 'absent', }
+  }
+
 }
