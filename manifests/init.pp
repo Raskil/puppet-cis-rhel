@@ -16,9 +16,11 @@ class cisbench (
   contain cisbench::config_softwareupdates
   contain cisbench::aide
   contain cisbench::selinux
+  contain cisbench::secureboot
 
   Class['cisbench::filesystem'] ->
   Class['cisbench::config_softwareupdates'] ->
   Class['cisbench::aide'] ->
-  Class['cisbench::selinux']
+  Class['cisbench::selinux'] ->
+  Class['cisbench::secureboot']
 }

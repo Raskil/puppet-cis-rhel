@@ -49,6 +49,10 @@ class cisbench::params (
   $aideconf_path = '/etc/aide.conf'
   $selinuxconfigenforcing_selinux = 'enforcing'
   $selinuxconfigenforcing_selinuxtype = 'targeted'
+  $grubconfownedbyroot_report = true
+  $grubconfownedbyroot_manage = $managediffs
+  $grubconfnoaccess_report = true
+  $grubconfnoaccess_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {

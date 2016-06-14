@@ -230,7 +230,19 @@ Facter.add(:cis) do
     returnval = Facter::Core::Execution.exec('ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr \':\' \' \' | awk \'{ print $NF "-" $5 }\' 2> /dev/null')
     cishash['selinux_unconfined_deamons'] = returnval.split(/\n+/)
     returnval = Facter::Core::Execution.exec('ps -eZ | egrep "unconfined" | egrep -vw "tr|ps|egrep|bash|awk" | tr \':\' \' \' | awk \'{ print $NF "-" $5 }\' 2> /dev/null')
-    cishash['selinux_unconfined_deamons'] + returnval.split(/\n+/)  
+    cishash['selinux_unconfined_deamons'] + returnval.split(/\n+/)
+    returnval = Facter::Core::Execution.exec('stat -L -c "%u %g" /etc/grub.conf | egrep "0 0"')
+    if returnval.include? '0 0'
+      cishash['is_grubconfownedbyroot'] =  true
+    else
+      cishash['is_grubconfownedbyroot'] =  false
+    end  
+    returnval = Facter::Core::Execution.exec('stat -L -c "%a" /etc/grub.conf | egrep ".00"')
+    if returnval.include? '00'
+      cishash['has_grubconfnoaccess'] =  true
+    else
+      cishash['has_grubconfnoaccess'] =  false
+    end  
     cishash
   end
 end
