@@ -39,6 +39,9 @@ class cisbench::selinux (
   validate_bool($selinuxpolicyrecommended_report)
   validate_bool($nosetroubleshootrpm_manage)
   validate_bool($nosetroubleshootrpm_report)
+  validate_bool($nomcstransrpm_manage)
+  validate_bool($nomcstransrpm_report)
+  validate_bool($unconfinedprocesses_report)
 
   if $::cis['is_selinuxbootenabled'] == false and $selinuxgrubenabled_report == true {
     notify { 'Cisbench: Selinux is disabled in Grub Boot Config!': }
