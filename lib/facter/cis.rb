@@ -279,7 +279,7 @@ Facter.add(:cis) do
     else
       cishash['is_suiddumpdisabled'] =  false
     end
-    if :kernelrelease.include? 'uek'
+    if Facter.value(:kernelrelease).include? 'uek'
       cishash['is_execshieldenabled'] =  false
     else
       returnval = Facter::Core::Execution.exec('sysctl kernel.exec-shield')
