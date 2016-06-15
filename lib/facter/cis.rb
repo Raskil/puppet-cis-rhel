@@ -307,6 +307,18 @@ Facter.add(:cis) do
     else
       cishash['has_notelnet'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q rsh-server > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_norshserver'] =  true
+    else
+      cishash['has_norshserver'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q rsh > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_norsh'] =  true
+    else
+      cishash['has_norsh'] =  false
+    end
     cishash
   end
 end

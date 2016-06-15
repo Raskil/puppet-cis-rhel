@@ -71,6 +71,10 @@ class cisbench::params (
   $notelnetserver_manage = $managediffs
   $notelnet_report = true
   $notelnet_manage = $managediffs
+  $norshserver_report = true
+  $norshserver_manage = $managediffs
+  $norsh_report = true
+  $norsh_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {
