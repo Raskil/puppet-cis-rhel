@@ -319,6 +319,18 @@ Facter.add(:cis) do
     else
       cishash['has_norsh'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q ypbind > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_ypbind'] =  true
+    else
+      cishash['has_ypbind'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q ypserv > /dev/null 2>&1; echo $?')
+        if returnval  == '1'
+          cishash['has_ypserv'] =  true
+        else
+          cishash['has_ypserv'] =  false
+        end
     cishash
   end
 end

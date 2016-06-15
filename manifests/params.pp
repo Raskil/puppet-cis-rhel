@@ -75,6 +75,10 @@ class cisbench::params (
   $norshserver_manage = $managediffs
   $norsh_report = true
   $norsh_manage = $managediffs
+  $noypbind_report = true
+  $noypbind_manage = $managediffs
+  $noypserv_report = true
+  $noypserv_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {
