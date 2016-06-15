@@ -18,11 +18,13 @@ class cisbench (
   contain cisbench::selinux
   contain cisbench::secureboot
   contain cisbench::processhardening
+  contain cisbench::legacyservices
 
   Class['cisbench::filesystem'] ->
   Class['cisbench::config_softwareupdates'] ->
   Class['cisbench::aide'] ->
   Class['cisbench::selinux'] ->
   Class['cisbench::secureboot'] ->
-  Class['cisbench::processhardening']
+  Class['cisbench::processhardening'] ->
+  Class['cisbench::legacyservices']
 }

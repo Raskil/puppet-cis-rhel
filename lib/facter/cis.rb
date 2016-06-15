@@ -295,6 +295,12 @@ Facter.add(:cis) do
     else
       cishash['is_randvaenabled'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q telnet-server > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_notelnetserver'] =  true
+    else
+      cishash['has_notelnetserver'] =  false
+    end
     cishash
   end
 end
