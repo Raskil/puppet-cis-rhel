@@ -11,14 +11,18 @@
 # Sample Usage:
 #
 class cisbench::processhardening (
-  $coredumpdisabled_report = $cisbench::params::coredumpdisabled_report,
-  $coredumpdisabled_manage = $cisbench::params::coredumpdisabled_manage,
-  $suiddumpdisabled_report = $cisbench::params::suiddumpdisabled_report,
-  $suiddumpdisabled_manage = $cisbench::params::suiddumpdisabled_manage) inherits cisbench::params {
+  $coredumpdisabled_report  = $cisbench::params::coredumpdisabled_report,
+  $coredumpdisabled_manage  = $cisbench::params::coredumpdisabled_manage,
+  $suiddumpdisabled_report  = $cisbench::params::suiddumpdisabled_report,
+  $suiddumpdisabled_manage  = $cisbench::params::suiddumpdisabled_manage,
+  $execshieldenabled_report = $cisbench::params::execshieldenabled_report,
+  $execshieldenabled_manage = $cisbench::params::execshieldenabled_manage,) inherits cisbench::params {
   validate_bool($coredumpdisabled_report)
   validate_bool($coredumpdisabled_manage)
   validate_bool($suiddumpdisabled_report)
   validate_bool($suiddumpdisabled_manage)
+  validate_bool($execshieldenabled_report)
+  validate_bool($execshieldenabled_manage)
 
   if $::cis['is_coredumpdisabled'] == false and $coredumpdisabled_report == true {
     notify { 'Cisbench: Core dumps are enabled in limits.conf!': }
@@ -43,6 +47,20 @@ class cisbench::processhardening (
       ensure    => 'present',
       permanent => 'yes',
       value     => '0',
+    }
+  }
+
+  if !('uek' in $::kernelrelease= {
+    if $::cis['is_execshieldenabled'] == false and $execshieldenabled_report == true {
+      notify { 'Cisbench: SUID Dumps are allowed in sysctl!': }
+    }
+    
+    if $execshieldenabled_manage == true {
+      sysctl { 'kernel.exec-shield':
+        ensure    => 'present',
+        permanent => 'yes',
+        value     => '1',
+      }
     }
   }
 
