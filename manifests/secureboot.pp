@@ -81,6 +81,10 @@ class cisbench::secureboot (
     notify { 'Cisbench: Single User Mode has a non login shell configured!': }
   }
 
+  if $::cis['has_nointeractiveboot'] == false and $nointeractiveboot_report == true {
+    notify { 'Cisbench: Boot prompt is enabled!': }
+  }
+
   if $singleusermodelogin_manage == true {
     $loginshell = '/sbin/sulogin'
   } else {

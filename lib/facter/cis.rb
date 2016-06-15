@@ -251,9 +251,9 @@ Facter.add(:cis) do
     end
     returnval = Facter::Core::Execution.exec('grep "^SINGLE" /etc/sysconfig/init')
     if returnval.include? 'sulogin'
-      cishash['has_singleusermodelogin'] =  false
-    else
       cishash['has_singleusermodelogin'] =  true
+    else
+      cishash['has_singleusermodelogin'] =  false
     end
     returnval = Facter::Core::Execution.exec('grep "^PROMPT" /etc/sysconfig/init')
     if returnval.include? 'yes'
