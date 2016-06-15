@@ -69,6 +69,8 @@ class cisbench::params (
   $randvaenabled_manage = $managediffs
   $notelnetserver_report = true
   $notelnetserver_manage = $managediffs
+  $notelnet_report = true
+  $notelnet_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {

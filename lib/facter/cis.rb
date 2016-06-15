@@ -301,6 +301,12 @@ Facter.add(:cis) do
     else
       cishash['has_notelnetserver'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q telnet > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_notelnet'] =  true
+    else
+      cishash['has_notelnet'] =  false
+    end
     cishash
   end
 end
