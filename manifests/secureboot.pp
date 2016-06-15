@@ -44,7 +44,7 @@ class cisbench::secureboot (
   }
 
   if $grubpassword_manage == true and $grubpassword == undef {
-    fail('Cisbench Module: You set $grubpassword_manage to true but did not supply a password to $cisbench::secureboot::grubpassword. Please supply an SHA-512 encrypted grub password via $cisbench::secureboot::grubpassword or set $cisbench::secureboot::grubpassword_manage to false.'
+    fail('Cisbench Module: You set $grubpassword_manage to true but did not supply a password to $cisbench::secureboot. Please supply an SHA-512 encrypted grub password via parameter $cisbench::secureboot::grubpassword or set $cisbench::secureboot::grubpassword_manage to false.'
     )
   }
 
@@ -61,6 +61,7 @@ class cisbench::secureboot (
         'clear password/encrypted',
         "set password $grubpassword",
         ],
+      onlyif  => "match password size == 0",
     }
   }
 
