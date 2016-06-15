@@ -50,11 +50,11 @@ class cisbench::processhardening (
     }
   }
 
-  if !('uek' in $::kernelrelease= {
+  if !('uek' in $::kernelrelease) {
     if $::cis['is_execshieldenabled'] == false and $execshieldenabled_report == true {
       notify { 'Cisbench: SUID Dumps are allowed in sysctl!': }
     }
-    
+
     if $execshieldenabled_manage == true {
       sysctl { 'kernel.exec-shield':
         ensure    => 'present',
