@@ -249,6 +249,18 @@ Facter.add(:cis) do
     else
       cishash['has_grubpassword'] =  false
     end
+    returnval = Facter::Core::Execution.exec('grep "^SINGLE" /etc/sysconfig/init')
+    if returnval.include? 'sulogin'
+      cishash['has_singleusermodelogin'] =  false
+    else
+      cishash['has_singleusermodelogin'] =  true
+    end
+    returnval = Facter::Core::Execution.exec('grep "^PROMPT" /etc/sysconfig/init')
+    if returnval.include? 'yes'
+      cishash['has_nointeractiveboot'] =  false
+    else
+      cishash['has_nointeractiveboot'] =  true
+    end
     cishash
   end
 end

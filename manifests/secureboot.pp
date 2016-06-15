@@ -17,7 +17,11 @@ class cisbench::secureboot (
   $grubconfnoaccess_manage    = $cisbench::params::grubconfnoaccess_manage,
   $grubconfnoaccess_report    = $cisbench::params::grubconfnoaccess_report,
   $grubpassword_report        = $cisbench::params::grubpassword_report,
-  $grubpassword_manage        = $cisbench::params::grubpassword_manage,) inherits cisbench::params {
+  $grubpassword_manage        = $cisbench::params::grubpassword_manage,
+  $singleusermodelogin_report = $cisbench::params::singleusermodelogin_report,
+  $singleusermodelogin_manage = $cisbench::params::singleusermodelogin_manage,
+  $nointeractiveboot_report   = $cisbench::params::nointeractiveboot_report,
+  $nointeractiveboot_manage   = $cisbench::params::nointeractiveboot_manage,) inherits cisbench::params {
   validate_bool($grubconfownedbyroot_manage)
   validate_bool($grubconfownedbyroot_report)
   validate_bool($grubconfnoaccess_manage)
@@ -25,6 +29,10 @@ class cisbench::secureboot (
   validate_bool($grubpassword_report)
   validate_bool($grubpassword_manage)
   validate_string($grubpassword)
+  validate_bool($singleusermodelogin_report)
+  validate_bool($singleusermodelogin_manage)
+  validate_bool($nointeractiveboot_report)
+  validate_bool($nointeractiveboot_manage)
 
   if $::cis['is_grubconfownedbyroot'] == false and $grubconfownedbyroot_report == true {
     notify { 'Cisbench: Grub config file is not owned by root!': }
@@ -67,6 +75,32 @@ class cisbench::secureboot (
 
   if $::cis['has_grubpassword'] == false and $grubpassword_report == true {
     notify { 'Cisbench: Grub config file has no password set!': }
+  }
+
+  if $::cis['has_singleusermodelogin'] == false and $singleusermodelogin_report == true {
+    notify { 'Cisbench: Single User Mode has a non login shell configured!': }
+  }
+
+  if $singleusermodelogin_manage == true {
+    $loginshell = '/sbin/sulogin'
+  } else {
+    $loginshell = '/sbin/sushell'
+  }
+
+  if $nointeractiveboot_manage == true {
+    $prompt = 'no'
+  } else {
+    $prompt = 'yes'
+  }
+
+  if $singleusermodelogin_manage == true or $nointeractiveboot_manage == true {
+    file { '/etc/sysconfig/init':
+      ensure  => 'file',
+      content => template('cisbench/init.erb'),
+      group   => 'root',
+      mode    => '0644',
+      owner   => 'root',
+    }
   }
 
 }
