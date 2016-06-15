@@ -1,4 +1,4 @@
-# Class: cisbench::aide
+# Class: cisbench::selinux
 #
 # This module manages cisbench aide config
 #

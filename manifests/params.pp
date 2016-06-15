@@ -59,6 +59,10 @@ class cisbench::params (
   $singleusermodelogin_manage = $managediffs
   $nointeractiveboot_report = true
   $nointeractiveboot_manage = $managediffs
+  $coredumpdisabled_report = true
+  $coredumpdisabled_manage = $managediffs
+  $suiddumpdisabled_report = true
+  $suiddumpdisabled_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {

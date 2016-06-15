@@ -1,4 +1,4 @@
-# Class: cisbench::aide
+# Class: cisbench::secureboot
 #
 # This module manages cisbench aide config
 #

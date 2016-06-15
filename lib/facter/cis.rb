@@ -1,8 +1,9 @@
 require 'facter'
 
-# Check to see if rz.conf is there
+
 Facter.add(:cis) do
   confine :osfamily => "RedHat"
+  confine :operatingsystemmajrelease => '6'
   cishash = {}
   setcode do
     returnval = Facter::Core::Execution.exec('egrep \'^[[:space:]]*[^#]{1,}.*[[:space:]]/tmp[[:space:]]\' /etc/fstab')
@@ -260,6 +261,23 @@ Facter.add(:cis) do
       cishash['has_nointeractiveboot'] =  false
     else
       cishash['has_nointeractiveboot'] =  true
+    end
+    returnval = Facter::Core::Execution.exec('grep "\*[[:space:]]*hard[[:space:]]*core" /etc/security/limits.conf')
+    if returnval.include? '0'
+      cishash['is_coredumpdisabled'] =  true
+    else
+      returnval = Facter::Core::Execution.exec('grep -R "\*[[:space:]]*hard[[:space:]]*core" /etc/security/limits.d/*.conf')
+      if returnval.include? '0'
+        cishash['is_coredumpdisabled'] =  true
+      else
+        cishash['is_coredumpdisabled'] =  false
+      end
+    end
+    returnval = Facter::Core::Execution.exec('sysctl fs.suid_dumpable')
+    if returnval.include? 'fs.suid_dumpable = 0'
+      cishash['is_suiddumpdisabled'] =  true
+    else
+      cishash['is_suiddumpdisabled'] =  false
     end
     cishash
   end
