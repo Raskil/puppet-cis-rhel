@@ -65,6 +65,8 @@ class cisbench::params (
   $suiddumpdisabled_manage = $managediffs
   $execshieldenabled_report = true
   $execshieldenabled_manage = $managediffs
+  $randvaenabled_report = true
+  $randvaenabled_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {

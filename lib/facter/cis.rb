@@ -289,6 +289,12 @@ Facter.add(:cis) do
         cishash['is_execshieldenabled'] =  false
       end
     end
+    returnval = Facter::Core::Execution.exec('sysctl kernel.randomize_va_space')
+    if returnval.include? 'kernel.randomize_va_space = 2'
+      cishash['is_randvaenabled'] =  true
+    else
+      cishash['is_randvaenabled'] =  false
+    end
     cishash
   end
 end

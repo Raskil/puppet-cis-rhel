@@ -16,13 +16,17 @@ class cisbench::processhardening (
   $suiddumpdisabled_report  = $cisbench::params::suiddumpdisabled_report,
   $suiddumpdisabled_manage  = $cisbench::params::suiddumpdisabled_manage,
   $execshieldenabled_report = $cisbench::params::execshieldenabled_report,
-  $execshieldenabled_manage = $cisbench::params::execshieldenabled_manage,) inherits cisbench::params {
+  $execshieldenabled_manage = $cisbench::params::execshieldenabled_manage,
+  $randvaenabled_report     = $cisbench::params::randvaenabled_report,
+  $randvaenabled_manage     = $cisbench::params::randvaenabled_manage,) inherits cisbench::params {
   validate_bool($coredumpdisabled_report)
   validate_bool($coredumpdisabled_manage)
   validate_bool($suiddumpdisabled_report)
   validate_bool($suiddumpdisabled_manage)
   validate_bool($execshieldenabled_report)
   validate_bool($execshieldenabled_manage)
+  validate_bool($randvaenabled_report)
+  validate_bool($randvaenabled_manage)
 
   if $::cis['is_coredumpdisabled'] == false and $coredumpdisabled_report == true {
     notify { 'Cisbench: Core dumps are enabled in limits.conf!': }
@@ -52,7 +56,7 @@ class cisbench::processhardening (
 
   if !('uek' in $::kernelrelease) {
     if $::cis['is_execshieldenabled'] == false and $execshieldenabled_report == true {
-      notify { 'Cisbench: SUID Dumps are allowed in sysctl!': }
+      notify { 'Cisbench: Kernel exec-shield is not enabled in sysctl!': }
     }
 
     if $execshieldenabled_manage == true {
@@ -61,6 +65,18 @@ class cisbench::processhardening (
         permanent => 'yes',
         value     => '1',
       }
+    }
+  }
+
+  if $::cis['is_randvaenabled'] == false and $randvaenabled_report == true {
+    notify { 'Cisbench: Kernel randomize VA Space is not enabled in sysctl!': }
+  }
+
+  if $randvaenabled_manage == true {
+    sysctl { 'kernel.randomize_va_space':
+      ensure    => 'present',
+      permanent => 'yes',
+      value     => '2',
     }
   }
 
