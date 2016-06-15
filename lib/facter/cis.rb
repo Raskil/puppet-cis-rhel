@@ -321,16 +321,16 @@ Facter.add(:cis) do
     end
     returnval = Facter::Core::Execution.exec('/bin/rpm -q ypbind > /dev/null 2>&1; echo $?')
     if returnval  == '1'
-      cishash['has_ypbind'] =  true
+      cishash['has_noypbind'] =  true
     else
-      cishash['has_ypbind'] =  false
+      cishash['has_noypbind'] =  false
     end
     returnval = Facter::Core::Execution.exec('/bin/rpm -q ypserv > /dev/null 2>&1; echo $?')
-        if returnval  == '1'
-          cishash['has_ypserv'] =  true
-        else
-          cishash['has_ypserv'] =  false
-        end
+    if returnval  == '1'
+      cishash['has_noypserv'] =  true
+    else
+      cishash['has_noypserv'] =  false
+    end
     cishash
   end
 end
