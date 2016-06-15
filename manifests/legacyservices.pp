@@ -37,7 +37,7 @@ class cisbench::legacyservices (
   }
 
   if $::cis['has_notelnet'] == false and $notelnet_report == true {
-    notify { 'Cisbench: Telnet-Server is installed on your system!': }
+    notify { 'Cisbench: Telnet client is installed on your system!': }
   }
 
   if $notelnet_manage == true {
@@ -53,7 +53,7 @@ class cisbench::legacyservices (
   }
 
   if $::cis['has_norsh'] == false and $norsh_report == true {
-    notify { 'Cisbench: rsh-Server is installed on your system!': }
+    notify { 'Cisbench: rsh client is installed on your system!': }
   }
 
   if $norsh_manage == true {
