@@ -242,7 +242,13 @@ Facter.add(:cis) do
       cishash['has_grubconfnoaccess'] =  true
     else
       cishash['has_grubconfnoaccess'] =  false
-    end  
+    end
+    returnval = Facter::Core::Execution.exec('grep "^password" /etc/grub.conf')
+    if returnval.include? 'password'
+      cishash['has_grubpassword'] =  true
+    else
+      cishash['has_grubpassword'] =  false
+    end
     cishash
   end
 end

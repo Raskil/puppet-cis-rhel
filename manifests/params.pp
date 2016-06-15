@@ -53,6 +53,8 @@ class cisbench::params (
   $grubconfownedbyroot_manage = $managediffs
   $grubconfnoaccess_report = true
   $grubconfnoaccess_manage = $managediffs
+  $grubpassword_report = true
+  $grubpassword_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {
