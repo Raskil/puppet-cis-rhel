@@ -28,7 +28,9 @@ class cisbench::legacyservices (
   $notftpserver_report   = $cisbench::params::notftpserver_report,
   $notftpserver_manage   = $cisbench::params::notftpserver_manage,
   $notalk_report         = $cisbench::params::notalk_report,
-  $notalk_manage         = $cisbench::params::notalk_manage,) inherits cisbench::params {
+  $notalk_manage         = $cisbench::params::notalk_manage,
+  $notalkserver_report   = $cisbench::params::notalkserver_report,
+  $notalkserver_manage   = $cisbench::params::notalkserver_manage,) inherits cisbench::params {
   validate_bool($notelnetserver_report)
   validate_bool($notelnetserver_manage)
   validate_bool($notelnet_report)
@@ -45,6 +47,10 @@ class cisbench::legacyservices (
   validate_bool($notftp_manage)
   validate_bool($notftpserver_report)
   validate_bool($notftpserver_manage)
+  validate_bool($notalk_report)
+  validate_bool($notalk_manage)
+  validate_bool($notalkserver_report)
+  validate_bool($notalkserver_manage)
 
   if $::cis['has_notelnetserver'] == false and $notelnetserver_report == true {
     notify { 'Cisbench: Telnet-Server is installed on your system!': }
@@ -116,6 +122,14 @@ class cisbench::legacyservices (
 
   if $notalk_manage == true {
     package { 'talk': ensure => 'absent', }
+  }
+
+  if $::cis['has_notalkserver'] == false and $notalkserver_report == true {
+    notify { 'Cisbench: talk-server is installed on your system!': }
+  }
+
+  if $notalkserver_manage == true {
+    package { 'talk-server': ensure => 'absent', }
   }
 
 }

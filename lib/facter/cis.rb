@@ -349,6 +349,12 @@ Facter.add(:cis) do
     else
       cishash['has_notalk'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q talk-server > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_notalkserver'] =  true
+    else
+      cishash['has_notalkserver'] =  false
+    end
     cishash
   end
 end
