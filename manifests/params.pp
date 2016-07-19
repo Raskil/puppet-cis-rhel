@@ -87,6 +87,23 @@ class cisbench::params (
   $notalk_manage = $managediffs
   $notalkserver_report = true
   $notalkserver_manage = $managediffs
+  $noxinetd_report = true
+  $noxinetd_manage = $managediffs
+  $chargendgramdisabled_report = true
+  $chargendgramdisabled_manage = $managediffs
+  $chargenstreamdisabled_report = true
+  $chargenstreamdisabled_manage = $managediffs
+  $daytimedgramdisabled_report = true
+  $daytimedgramdisabled_manage = $managediffs
+  $daytimestreamdisabled_report = true
+  $daytimestreamdisabled_manage = $managediffs
+  $echodgramdisabled_report = true
+  $echodgramdisabled_manage = $managediffs
+  $echostreamdisabled_report = true
+  $echostreamdisabled_manage = $managediffs
+  $tcpmuxserverdisabled_report = true
+  $tcpmuxserverdisabled_manage = $managediffs
+
 
   case $cisleveldefaults {
     1       : {

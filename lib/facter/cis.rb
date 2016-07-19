@@ -355,6 +355,22 @@ Facter.add(:cis) do
     else
       cishash['has_notalkserver'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q xinetd > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_noxinetd'] =  true
+    else
+      cishash['has_noxinetd'] =  false
+    end
+
+    disablededservices = Array['chargen-dgram', 'chargen-stream', 'daytime-dgram', 'daytime-stream', 'echo-dgram', 'echo-stream', 'tcpmux-server']
+    disablededservices.each do |item|
+      returnval = Facter::Core::Execution.exec('/sbin/chkconfig --list tcpmux-server | grep :on > /dev/null 2>&1; echo $?')
+      if returnval  == '1'
+        cishash["is_#{item.gsub('-', '')}disabled"] =  true
+      else
+        cishash["is_#{item.gsub('-', '')}disabled"] =  false
+      end
+    end
     cishash
   end
 end
