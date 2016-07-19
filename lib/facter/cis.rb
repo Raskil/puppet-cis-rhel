@@ -331,6 +331,24 @@ Facter.add(:cis) do
     else
       cishash['has_noypserv'] =  false
     end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q tftp > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_notftp'] =  true
+    else
+      cishash['has_notftp'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q tftp-server > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_notftpserver'] =  true
+    else
+      cishash['has_notftpserver'] =  false
+    end
+    returnval = Facter::Core::Execution.exec('/bin/rpm -q talk > /dev/null 2>&1; echo $?')
+    if returnval  == '1'
+      cishash['has_notalk'] =  true
+    else
+      cishash['has_notalk'] =  false
+    end
     cishash
   end
 end

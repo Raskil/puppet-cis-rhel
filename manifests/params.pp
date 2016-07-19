@@ -79,6 +79,12 @@ class cisbench::params (
   $noypbind_manage = $managediffs
   $noypserv_report = true
   $noypserv_manage = $managediffs
+  $notftp_report = true
+  $notftp_manage = $managediffs
+  $notftpserver_report = true
+  $notftpserver_manage = $managediffs
+  $notalk_report = true
+  $notalk_manage = $managediffs
 
   case $cisleveldefaults {
     1       : {

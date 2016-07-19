@@ -22,7 +22,13 @@ class cisbench::legacyservices (
   $noypbind_report       = $cisbench::params::noypbind_report,
   $noypbind_manage       = $cisbench::params::noypbind_manage,
   $noypserv_report       = $cisbench::params::noypserv_report,
-  $noypserv_manage       = $cisbench::params::noypserv_manage,) inherits cisbench::params {
+  $noypserv_manage       = $cisbench::params::noypserv_manage,
+  $notftp_report         = $cisbench::params::notftp_report,
+  $notftp_manage         = $cisbench::params::notftp_manage,
+  $notftpserver_report   = $cisbench::params::notftpserver_report,
+  $notftpserver_manage   = $cisbench::params::notftpserver_manage,
+  $notalk_report         = $cisbench::params::notalk_report,
+  $notalk_manage         = $cisbench::params::notalk_manage,) inherits cisbench::params {
   validate_bool($notelnetserver_report)
   validate_bool($notelnetserver_manage)
   validate_bool($notelnet_report)
@@ -35,6 +41,10 @@ class cisbench::legacyservices (
   validate_bool($noypbind_manage)
   validate_bool($noypserv_report)
   validate_bool($noypserv_manage)
+  validate_bool($notftp_report)
+  validate_bool($notftp_manage)
+  validate_bool($notftpserver_report)
+  validate_bool($notftpserver_manage)
 
   if $::cis['has_notelnetserver'] == false and $notelnetserver_report == true {
     notify { 'Cisbench: Telnet-Server is installed on your system!': }
@@ -82,6 +92,30 @@ class cisbench::legacyservices (
 
   if $noypbind_manage == true {
     package { 'ypserv': ensure => 'absent', }
+  }
+
+  if $::cis['has_notftp'] == false and $notftp_report == true {
+    notify { 'Cisbench: tftp is installed on your system!': }
+  }
+
+  if $notftp_manage == true {
+    package { 'tftp': ensure => 'absent', }
+  }
+
+  if $::cis['has_notftpserver'] == false and $notftpserver_report == true {
+    notify { 'Cisbench: tftp-server is installed on your system!': }
+  }
+
+  if $notftpserver_manage == true {
+    package { 'tftp-server': ensure => 'absent', }
+  }
+
+  if $::cis['has_notalk'] == false and $notalk_report == true {
+    notify { 'Cisbench: talk is installed on your system!': }
+  }
+
+  if $notalk_manage == true {
+    package { 'talk': ensure => 'absent', }
   }
 
 }
