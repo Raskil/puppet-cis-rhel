@@ -364,7 +364,7 @@ Facter.add(:cis) do
 
     disablededservices = Array['chargen-dgram', 'chargen-stream', 'daytime-dgram', 'daytime-stream', 'echo-dgram', 'echo-stream', 'tcpmux-server']
     disablededservices.each do |item|
-      returnval = Facter::Core::Execution.exec('/sbin/chkconfig --list tcpmux-server | grep :on > /dev/null 2>&1; echo $?')
+      returnval = Facter::Core::Execution.exec("/sbin/chkconfig --list #{item} | grep on > /dev/null 2>&1; echo $?")
       if returnval  == '1'
         cishash["is_#{item.gsub('-', '')}disabled"] =  true
       else

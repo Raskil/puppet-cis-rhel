@@ -178,7 +178,6 @@ class cisbench::legacyservices (
 
   if $chargendgramdisabled_manage == true {
     service { 'chargen-dgram':   
-      ensure => 'stopped',
       enable => 'false',
     }
   }
